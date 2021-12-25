@@ -1,6 +1,6 @@
 <?php
 function dirToArray($dir) {
-   $res = array();
+   $nomemodpack = str_replace("files/", "", $dir);
    $cdir = scandir($dir);
    foreach ($cdir as $key => $value){
       if (!in_array($value,array(".",".."))){
@@ -9,8 +9,8 @@ function dirToArray($dir) {
          } else {
             $hash = hash_file('sha1', $dir . "/" . $value);
             $size = filesize($dir . "/" . $value);
-            $path = str_replace("files/modpack-opencomputers/", "", $dir . "/" . $value);
-            $url = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . $dir . "/" . $value;
+            $path = str_replace($dir."/", "", $nomemodpack . "/" . $value);
+            $url = "http://" . $_SERVER['HTTP_HOST'] ."/cliente/files/". $dir . "/" . $value;
             if (strpos($path, "libraries") !== false) {
                $type = "LIBRARY";
             } else if (strpos($path, "mods") !== false) {
@@ -32,12 +32,13 @@ $json = json_decode($json_file); // decode the JSON into an associative array
 foreach ( $json as $e )
     {
        if($e->id == $identificador){
-          return $e->directory;
-    
+          return "files/".$e->directory;
        }
     }
 }
 
 header("Content-Type: application/json; charset=UTF-8");
-echo "[", dirToArray("files/modpack-opencomputers"), "\"\"]";
+if (isset($_GET['modpack'])) {
+echo "[", dirToArray(getDirectory($_GET['modpack'])), "\"\"]";
+}
 ?>

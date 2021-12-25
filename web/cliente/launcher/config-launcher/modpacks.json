@@ -1,16 +1,16 @@
 [
 {
-    "id":1,
+    "id":0,
     "name":"Mod teste",
     "directory":"modpack-teste",
     "default": true,
     "description":"descrição de me modpack teste.",
-    "game_version":"1.12.2",
+    "game_version":"1.16.5",
     "img":"",
     "author":""
 },
 {
-    "id":2,
+    "id":1,
     "name":"Modpack de opencomputers",
     "directory":"modpack-opencomputers",
     "default": false,
@@ -18,6 +18,5 @@
     "game_version":"1.12.2",
     "img":"",
     "author":""
-
 }
 ]
