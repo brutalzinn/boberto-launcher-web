@@ -6,6 +6,9 @@
     "default": false,
     "description":"descrição de me modpack teste.",
     "game_version":"1.16.5",
+    "forge_version":"1.16.5-38.6.40",
+    "server_ip":"boberto.net",
+    "server_port":"25565",
     "img":"http://localhost/cliente/launcher/imagem-launcher/default.png",
     "author":""
 },
@@ -16,6 +19,9 @@
     "default": true,
     "description":"essa é uma descrição do openc omputers modpack",
     "game_version":"1.12.2",
+    "forge_version":"1.12.2-38.6.40",
+    "server_ip":"boberto.net",
+    "server_port":"25566",
     "img":"",
     "author":""
 }
