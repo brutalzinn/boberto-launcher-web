@@ -1,8 +1,18 @@
 <?php
+include __DIR__.'../../../vendor/autoload.php';
+
+Predis\Autoloader::register();
+$client = new Predis\Client([
+    'scheme' => 'tcp',
+    'host'   => 'host.docker.internal',
+    'port'   => 6379,
+    'password' => 'SUASENHA'
+]);
+
+$GLOBALS['DIRS']= array();
 function dirToArray($dir,$modpack) {
    $cdir = scandir($dir);
    foreach ($cdir as $key => $value){
-
       if (!in_array($value,array(".",".."))){
          if (is_dir($dir . DIRECTORY_SEPARATOR . $value)) {
             dirToArray($dir . DIRECTORY_SEPARATOR . $value, $modpack);
@@ -22,10 +32,13 @@ function dirToArray($dir,$modpack) {
             } else {
                $type = "FILE";
             }
-            echo "{\"path\":\"$path\",\"size\":$size,\"sha1\":\"$hash\",\"url\":\"$url\",\"type\":\"$type\"},";
+            $obj = array("path"=>$path, "size"=>$size, "sha1"=>$hash,"url"=>$url,"type"=>$type);
+            array_push($GLOBALS['DIRS'], $obj);
          }
+         
       }
    }
+
 }
 
 function getDirectory($identificador){
@@ -37,13 +50,25 @@ foreach ( $json as $e )
           return $e->directory;
        }
     }
+    return null;
 }
 
 header("Content-Type: application/json; charset=UTF-8");
 if (isset($_GET['modpack'])) {
 $modpack = getDirectory($_GET['modpack']);
+if($modpack == null){
+   return;
+}
 $dir = "files/".$modpack;
-echo "[", dirToArray($dir,$modpack), "\"\"]";
-//echo dirToArray(getDirectory($_GET['modpack']));
+$value = $client->get($_GET['modpack']);
+if(!isset($value)){
+   dirToArray($dir,$modpack);
+   $resultado = json_encode($GLOBALS['DIRS'],JSON_UNESCAPED_SLASHES ) ;
+   $client->set($_GET['modpack'], $resultado);
+   $client->expire($_GET['modpack'], 3600);
+   echo "[", $client->get($_GET['modpack']), "\"\"]";
+}else{
+   echo $client->get($_GET['modpack']);
+}
 }
 ?>

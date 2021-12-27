@@ -5,7 +5,7 @@ services:
     ports:
       - "80:80"
     restart: always
-    container_name: teste-launcher
+    container_name: web-launcher
     volumes:
       - ./web:/var/www/html
       - ./web/config/php.ini:/usr/local/etc/php/php.ini
@@ -22,12 +22,10 @@ services:
   #   ports:
   #     - "5050:80"
 
-  # redis-compose:
-  #   image: redis
-  #   container_name: boberto-cache
-  #   command: redis-server --requirepass SUASENHA --appendonly yes
-  #   hostname: redis
-  #   ports:
-  #     - "6379:6379"
-  #   volumes:
-  #     - .Redis:/var/lib/postgresql/data
+  redis-compose:
+    image: redis
+    container_name: redis-launcher
+    command: redis-server --requirepass SUASENHA --appendonly yes
+    hostname: redis
+    ports:
+      - "6379:6379"
