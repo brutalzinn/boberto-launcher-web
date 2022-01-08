@@ -1,4 +1,4 @@
-# bobert-minecraft-launcher-web
+# boberto-minecraft-launcher-web
 
 # ENGLISH 
 This repository contains a web for the boberto minecraft launcher
