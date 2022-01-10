@@ -1,6 +1,17 @@
 # boberto-minecraft-launcher-web
 
+# PORTUGUÊS
+
+Este repositório contém uma web para o lançador de minecraft boberto
+e uma api python com frasco para ser usado com meu [criador de modpack](https://github.com/brutalzinn/CriadorDeMods)
+
+você precisa renomear env.example para .env e configurar com sua senha.
+
+Você precisa usar o Redis para armazenar em cache todos
+modpacks json gerados por php. Eu uso o redis para armazenar em cache todos os diretórios json gerados pelos modpacks para me dar uma melhor latência para o downloader do modpack.
+
 # ENGLISH 
+
 This repository contains a web for the boberto minecraft launcher
 and a python api with flask to be uses with my [Modpack creator](https://github.com/brutalzinn/CriadorDeMods)
 

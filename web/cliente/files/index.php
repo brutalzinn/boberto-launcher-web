@@ -1,12 +1,12 @@
 <?php
-include __DIR__.'../../../vendor/autoload.php';
+include __DIR__.'../../../../vendor/autoload.php';
 
 Predis\Autoloader::register();
 $client = new Predis\Client([
     'scheme' => 'tcp',
-    'host'   => 'host.docker.internal',
+    'host'   => getenv("BOBERTO_HOST"),
     'port'   => 6379,
-    'password' => 'SUASENHA'
+    'password' => getenv("REDIS_PASSWORD")
 ]);
 
 $GLOBALS['DIRS']= array();
@@ -22,7 +22,7 @@ function dirToArray($dir,$modpack) {
             $size = filesize($dir . "/" . $value);
             $path = str_replace("files/".$modpack."/", "", $dir . "/" . $value);
 
-            $url = "http://" . $_SERVER['HTTP_HOST'] ."/cliente/files/". $dir . "/" . $value;
+            $url = "http://" . $_SERVER['HTTP_HOST'] ."/data/cliente/files/". $dir . "/" . $value;
             if (strpos($path, "libraries") !== false) {
                $type = "LIBRARY";
             } else if (strpos($path, "mods") !== false) {
@@ -66,7 +66,7 @@ if(!isset($value)){
    $resultado = json_encode($GLOBALS['DIRS'],JSON_UNESCAPED_SLASHES ) ;
    $client->set($_GET['modpack'], $resultado);
    $client->expire($_GET['modpack'], 3600);
-   echo "[", $client->get($_GET['modpack']), "\"\"]";
+   echo  $client->get($_GET['modpack']);
 }else{
    echo $client->get($_GET['modpack']);
 }
