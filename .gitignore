@@ -142,4 +142,5 @@ cython_debug/
 
 
 .Redis/
-web/data/cliente/files/files/*/
+web/cliente/files/files/
+web/vendor
