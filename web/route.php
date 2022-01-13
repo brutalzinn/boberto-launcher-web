@@ -48,9 +48,8 @@ public function submit(){
             }
 
         }
-
-
     }
+    throw new Exception("Controller not found for this route");
 
 }
 
