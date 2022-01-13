@@ -1,12 +1,13 @@
 <?php
     namespace App\Controllers;
 
-    class LauncherController
+    class ApiController
     {
-       
+
         public function index() 
         {
-           return  "url funcionando";
+           return  "sucesso index";
         }
 
+    
     }
