@@ -6,7 +6,7 @@
        
         public function index() 
         {
-           return  "url funcionando";
+           return  "url funcionando " . $_SERVER['REQUEST_METHOD'];
         }
 
     }

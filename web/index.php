@@ -11,7 +11,7 @@
         http_response_code(200);
         echo json_encode(array('status' => 'sucess', 'data' => $route->submit()), JSON_UNESCAPED_UNICODE);
         exit;
-    } catch (\Exception $e) {
+    } catch (Exception $e) {
         http_response_code(404);
         echo json_encode(array('status' => 'error', 'data' => $e->getMessage()), JSON_UNESCAPED_UNICODE);
         exit;
