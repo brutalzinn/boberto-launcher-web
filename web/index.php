@@ -5,6 +5,7 @@
     $route = new Route();
     //url, controller, method of controller
     $route->add('/','Api','index');
+    $route->add('/teste','Api','teste');
     $route->add('/launcher','Launcher','index');
    
    try {
