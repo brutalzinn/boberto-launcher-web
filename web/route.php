@@ -47,8 +47,6 @@ public function submit(){
              
             }
 
-        }else{
-            throw new Exception("Controller not found: ". $this->_controller[$key]);
         }
 
 

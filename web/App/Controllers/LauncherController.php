@@ -1,12 +1,17 @@
 <?php
     namespace App\Controllers;
 
-    class LauncherController
+use Exception;
+
+class LauncherController extends BaseController
     {
        
         public function index() 
         {
-           return  "url funcionando " . $_SERVER['REQUEST_METHOD'];
+            if(!$this->REQUEST("POST")){
+                throw new Exception("ONLY POST IS ACCEPTED");
+            }
+           return  "url testeeeeeeee" ;
         }
 
     }
