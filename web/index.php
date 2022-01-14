@@ -11,11 +11,8 @@
     $route->add('/launcher/modpacks/upload','Launcher','uploadFile');
     $route->add('/launcher/version/upload','Launcher','uploadLauncherZips');
     $route->add('/launcher/version','Launcher','updateLauncherVersion');
-    $route->add('/modpackcreator/modpacks/sync','ModPackManager','addModPack');
-
-
-
-   try {
+    $route->add('/modpackcreator/modpacks/sync','ModPackManager','syncModPack');
+    try{
         http_response_code(200);
         echo json_encode(array('status' => true, 'data' => $route->submit()), JSON_UNESCAPED_UNICODE);
         exit;

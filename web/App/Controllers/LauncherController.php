@@ -13,7 +13,7 @@ class LauncherController extends BaseController
                 throw new Exception("ONLY GET IS ACCEPTED");
             }
 
-            $data = file_get_contents($this->_modpacks);
+            $data = file_get_contents($this->_modpacks_file);
             $json = json_decode($data, true);
             return  $json;
         }
@@ -25,7 +25,7 @@ class LauncherController extends BaseController
             }
 
             $data = file_get_contents('php://input');
-            $fp = fopen($this->_config, 'w');
+            $fp = fopen($this->_launcher_config_file, 'w');
             fwrite($fp, $data);
             fclose($fp);
     
@@ -79,7 +79,7 @@ class LauncherController extends BaseController
             $old_files = $this->dirList($this->_launcher_update_dir);
             $content = file_get_contents('php://input');
 
-            $launcher_package = file_get_contents($this->_launcher_package);
+            $launcher_package = file_get_contents($this->_launcher_package_file);
             $backup_package = json_decode($launcher_package, true);
             $decode = json_decode( $content, true );
             foreach ( $decode["packages"] as $key => $value){
@@ -100,7 +100,7 @@ class LauncherController extends BaseController
                 }
             }
            
-            if (file_put_contents($this->_launcher_package, json_encode($decode,JSON_UNESCAPED_SLASHES))){
+            if (file_put_contents($this->_launcher_package_file, json_encode($decode,JSON_UNESCAPED_SLASHES))){
                 return "Launcher config updated.";
             }
         }
