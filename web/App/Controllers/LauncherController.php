@@ -85,13 +85,39 @@ class LauncherController extends BaseController
             $cdir = scandir($this->_launcher_update_dir);
             $old_files = array();
             foreach ($cdir as $key => $value){
-               array_push($old_files, $value);
+                $file_type = strtolower(pathinfo($value, PATHINFO_EXTENSION));
+                if($file_type == "zip"){
+                array_push($old_files, $value);
+                }
             }
             
-            $data = file_get_contents('php://input');
-            // $fp = fopen($this->_config, 'w');
-            // fwrite($fp, $data);
-            // fclose($fp);
+            $content = file_get_contents('php://input');
+
+            $launcher_package = file_get_contents($this->_launcher_package);
+            $backup_package = json_decode($launcher_package, true);
+
+            $decode = json_decode( $content, true );
+            foreach ( $decode["packages"] as $valor){
+                var_dump($valor);
+
+                if($valor == null){
+                    $decode[$valor] = $backup_package[$valor];
+                }else{
+                    $filename = $this->getFileByUrl($valor["url"]);
+                    $teste = in_array($filename,$old_files);
+
+                    if(!$teste){
+                        $antigo = $this->getFileByUrl($backup_package[$valor]["url"]);
+                        $file_old = $this->_launcher_update_dir . basename($antigo);
+                        if(file_exists($file_old)){
+                            unlink($file_old);
+                        }
+                    }
+                }
+            }
+            $fp = fopen($this->_launcher_package, 'w');
+            fwrite($fp, $decode);
+            fclose($fp);
         }
 
     }
