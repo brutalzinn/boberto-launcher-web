@@ -10,7 +10,7 @@
         }
         public function teste() 
         {
-           return  "sucesso teste". $this->params()[1];
+           return  "sucesso teste ". $this->getParams()[0];
         }
     
     }

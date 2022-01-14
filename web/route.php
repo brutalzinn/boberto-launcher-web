@@ -23,14 +23,12 @@ public function add($uri, $controller = null, $method = null){
 public function submit(){
 
     $uriGetParm = $_SERVER['REQUEST_URI'];
-    echo $uriGetParm;
+    
     foreach($this->_uri as $key => $value)
     {
-        
-        if(preg_match("#^$value$#",$uriGetParm))
+        preg_match('#^\/[^\/]*#',$uriGetParm,$matchs);
+        if($matchs[0] == $value)
         {
-
-            echo "encontrou " . $value;
             if(is_string($this->_controller[$key]))
             {
                 $service = 'App\Controllers\\'.ucfirst($this->_controller[$key]).'Controller';
@@ -50,7 +48,7 @@ public function submit(){
 
         }
     }
-   // throw new Exception("Controller not found for this route");
+    throw new Exception("Controller not found for this route");
 
 }
 

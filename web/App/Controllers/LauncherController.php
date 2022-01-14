@@ -8,9 +8,9 @@ class LauncherController extends BaseController
        
         public function index() 
         {
-            if(!$this->REQUEST("POST")){
-                throw new Exception("ONLY POST IS ACCEPTED");
-            }
+            // if(!$this->REQUEST("POST")){
+            //     throw new Exception("ONLY POST IS ACCEPTED");
+            // }
            return  "url testeeeeeeee" ;
         }
 
