@@ -76,7 +76,7 @@ class LauncherController extends BaseController
         }
 
         public function updateLauncherVersion(){
-            $old_files = $this->dirList($this->_launcher_update_dir);
+            $old_files = $this->fileList($this->_launcher_update_dir);
             $content = file_get_contents('php://input');
 
             $launcher_package = file_get_contents($this->_launcher_package_file);

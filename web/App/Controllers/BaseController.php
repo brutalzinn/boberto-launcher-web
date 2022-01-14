@@ -40,20 +40,28 @@
                 return $file_ary;
             }
 
-            public function dirList($path,$filter = ['zip']){
+            public function dirList($path){
+                $dirs = array();
+                $structure = glob(rtrim($path, "/").'/*');
+                if (is_array($structure)) {
+                    foreach($structure as $file) {
+                        if (is_dir($file)){
+                        array_push($dirs,$file);
+                        }
+                      
+                    }
+                }
+                return $dirs;
+                
+            }
+            public function fileList($path,$filter = ['zip']){
                 $cdir = scandir($path);
                 $files = array();
                 foreach ($cdir as $key => $value){
                     $file_type = strtolower(pathinfo($value, PATHINFO_EXTENSION));
-                    if(count($filter) > 0){
-                        if(in_array($file_type,$filter))
-                        {
-                            array_push($files, $value);
-                        }
-                    }else if(count($filter) == 0){
-                        array_push($files, $value);
+                    if(in_array($file_type,$filter)){
+                    array_push($files, $value);
                     }
-                 
                 }
                 return $files;
             }
