@@ -8,6 +8,7 @@
     $route->add('/teste','Api','teste', true);
     $route->add('/launcher/modpacks/list','Launcher','list_modpacks');
     $route->add('/launcher/config','Launcher','launcher_Config');
+    $route->add('/launcher/modpacks/upload','Launcher','uploadFile');
 
 
 
