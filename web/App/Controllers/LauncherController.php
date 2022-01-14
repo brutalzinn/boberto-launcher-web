@@ -1,17 +1,11 @@
 <?php
-    namespace App\Controllers;
+namespace App\Controllers;
 
 use Exception;
 use ZipArchive;
 
 class LauncherController extends BaseController
     {
-        private $_modpacks = "cliente/launcher/config-launcher/modpacks.json";
-        private $_launcher_package = "cliente/launcher/package.json";
-
-        private $_config = "cliente/launcher/config-launcher/config.json";
-        private $_modpacks_dir = "cliente/files/files/";
-        private $_launcher_update_dir = "cliente/launcher/update-launcher/";
 
         public function list_modpacks() 
         {
@@ -82,32 +76,22 @@ class LauncherController extends BaseController
         }
 
         public function updateLauncherVersion(){
-            $cdir = scandir($this->_launcher_update_dir);
-            $old_files = array();
-            foreach ($cdir as $key => $value){
-                $file_type = strtolower(pathinfo($value, PATHINFO_EXTENSION));
-                if($file_type == "zip"){
-                array_push($old_files, $value);
-                }
-            }
-            
+            $old_files = $this->dirList($this->_launcher_update_dir);
             $content = file_get_contents('php://input');
 
             $launcher_package = file_get_contents($this->_launcher_package);
             $backup_package = json_decode($launcher_package, true);
-
             $decode = json_decode( $content, true );
-            foreach ( $decode["packages"] as $valor){
-                var_dump($valor);
-
-                if($valor == null){
-                    $decode[$valor] = $backup_package[$valor];
+            foreach ( $decode["packages"] as $key => $value){
+                
+                if($decode["packages"][$key] == null){
+                    $decode["packages"][$key] = $backup_package["packages"][$key];
                 }else{
-                    $filename = $this->getFileByUrl($valor["url"]);
+                    $filename = $this->getFileByUrl($value["url"]);
                     $teste = in_array($filename,$old_files);
 
                     if(!$teste){
-                        $antigo = $this->getFileByUrl($backup_package[$valor]["url"]);
+                        $antigo = $this->getFileByUrl($backup_package["packages"][$key]["url"]);
                         $file_old = $this->_launcher_update_dir . basename($antigo);
                         if(file_exists($file_old)){
                             unlink($file_old);
@@ -115,9 +99,10 @@ class LauncherController extends BaseController
                     }
                 }
             }
-            $fp = fopen($this->_launcher_package, 'w');
-            fwrite($fp, $decode);
-            fclose($fp);
+           
+            if (file_put_contents($this->_launcher_package, json_encode($decode,JSON_UNESCAPED_SLASHES))){
+                return "Launcher config updated.";
+            }
         }
 
     }

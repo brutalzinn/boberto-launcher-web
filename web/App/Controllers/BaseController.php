@@ -3,6 +3,12 @@
 
     class BaseController{
 
+        public $_modpacks = "cliente/launcher/config-launcher/modpacks.json";
+        public $_launcher_package = "cliente/launcher/package.json";
+        public $_config = "cliente/launcher/config-launcher/config.json";
+        public $_modpacks_dir = "cliente/files/files/";
+        public $_launcher_update_dir = "cliente/launcher/update-launcher/";
+
         public function isRequest($string)
         {
             return  strtolower($string) ==  strtolower($_SERVER['REQUEST_METHOD']);
@@ -32,5 +38,17 @@
                     }
                 }
                 return $file_ary;
+            }
+
+            public function dirList($path,$filter = ['zip']){
+                $cdir = scandir($path);
+                $files = array();
+                foreach ($cdir as $key => $value){
+                    $file_type = strtolower(pathinfo($value, PATHINFO_EXTENSION));
+                    if(in_array($file_type,$filter)){
+                    array_push($files, $value);
+                    }
+                }
+                return $files;
             }
     }

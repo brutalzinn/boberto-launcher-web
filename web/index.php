@@ -11,6 +11,7 @@
     $route->add('/launcher/modpacks/upload','Launcher','uploadFile');
     $route->add('/launcher/version/upload','Launcher','uploadLauncherZips');
     $route->add('/launcher/version','Launcher','updateLauncherVersion');
+    $route->add('/modpackcreator/modpacks/sync','ModPackManager','addModPack');
 
 
 
