@@ -9,6 +9,7 @@ class LauncherController extends BaseController
         private $_modpacks = "cliente/launcher/config-launcher/modpacks.json";
         private $_config = "cliente/launcher/config-launcher/config.json";
         private $_modpacks_dir = "cliente/files/files/";
+        private $_launcher_update_dir = "cliente/launcher/update-launcher/";
 
         public function list_modpacks() 
         {
@@ -34,7 +35,9 @@ class LauncherController extends BaseController
     
         }
         public function uploadFile()
+
         {
+
         $target_file =  $this->_modpacks_dir . basename($_FILES["file"]["name"]);
         $file_type = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
         if($file_type != "zip"){
@@ -56,6 +59,27 @@ class LauncherController extends BaseController
           } else {
             return "Sorry, there was an error uploading your file.";
           }
+
+        }
+
+        public function uploadLauncherZips()
+        {
+            
+            $file_ary = $this->reArrayFiles($_FILES['file']);         
+            foreach ($file_ary as $file) {
+                
+                $target_file =  $this->_launcher_update_dir . basename($file["name"]);
+                $file_type = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+                if($file_type != "zip"){
+                    throw new Exception("ONLY ZIP FILE IS SUPPORTED.");
+                }
+                if (!move_uploaded_file($file["tmp_name"], $target_file)) {
+                    return "cant move file" . $file['name'] . 'to launcher update folder';
+                    }
+            }
+            
+            return "All new launcher are released.";
+       
 
         }
 
