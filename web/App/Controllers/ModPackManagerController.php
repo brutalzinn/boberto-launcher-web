@@ -17,18 +17,14 @@ class ModPackManagerController extends BaseController
                 $modpack_dir = $this->pathJoin($this->_modpacks_dir,$value["directory"]);
                 array_push($modpacks_new,$modpack_dir);
             }
-           // var_dump($modpacks_new );
             foreach ( $modpack_old as $key => $value)
             {
                 if(!in_array($value,$modpacks_new)){     
                    $this->recursiveRemove($value);
                 }
             }
-          // var_dump($modpack_old);
             if ($this->writeJson($this->_modpacks_file, $decode)){
                 return "All modpacks are sync now.";
             }
-
-
         }
     }
