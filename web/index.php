@@ -7,7 +7,10 @@
     $route->add('/','Api','index');
     $route->add('/teste','Api','teste', true);
     $route->add('/launcher/modpacks/list','Launcher','list_modpacks');
-   
+    $route->add('/launcher/config','Launcher','launcher_Config');
+
+
+
    try {
         http_response_code(200);
         echo json_encode(array('status' => true, 'data' => $route->submit()), JSON_UNESCAPED_UNICODE);
