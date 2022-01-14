@@ -37,9 +37,9 @@ class LauncherController extends BaseController
         {
         $target_file =  $this->_modpacks_dir . basename($_FILES["file"]["name"]);
         $file_type = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-        // if($file_type != "zip"){
-        //     throw new Exception("ONLY ZIP FILE IS SUPPORTED.");
-        // }
+        if($file_type != "zip"){
+            throw new Exception("ONLY ZIP FILE IS SUPPORTED.");
+        }
         if (move_uploaded_file($_FILES["file"]["tmp_name"], $target_file)) {
             $zip = new ZipArchive;
   
