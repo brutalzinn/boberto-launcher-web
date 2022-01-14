@@ -81,9 +81,29 @@
                 }
                 rmdir($dir);
             }
+///obj,array,expected
+///
+///
+         public function checkObjectList($obj,$array,$expected){
+                $result = false;
+                foreach($array as $key => $value) {
+                    if($array[$key][$obj] == $expected){
+                        $result = true;
+                    }
+                }
+                echo $result ? "existe" : "não existe";
+                return $result;
+            }
 
             public function writeJson($path, $decode)
             {
              return file_put_contents($path, json_encode($decode,JSON_UNESCAPED_SLASHES + JSON_PRETTY_PRINT));
+            }
+
+            public function readJson($path)
+            {
+                $data = file_get_contents($path);
+                $json = json_decode($data, true);
+                return  $json;
             }
     }
