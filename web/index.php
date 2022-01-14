@@ -10,6 +10,7 @@
     $route->add('/launcher/config','Launcher','launcher_Config');
     $route->add('/launcher/modpacks/upload','Launcher','uploadFile');
     $route->add('/launcher/version/upload','Launcher','uploadLauncherZips');
+    $route->add('/launcher/version','Launcher','updateLauncherVersion');
 
 
 

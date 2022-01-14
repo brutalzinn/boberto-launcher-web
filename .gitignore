@@ -143,4 +143,5 @@ cython_debug/
 
 .Redis/
 web/cliente/files/files/
+web/cliente/launcher/update-launcher/
 web/vendor

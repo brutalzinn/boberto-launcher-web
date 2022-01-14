@@ -11,6 +11,12 @@
             $params =  explode('/', $_SERVER['REQUEST_URI']);
             return  array_slice($params, 2); 
         }
+
+        public function getFileByUrl($url){
+            $params =  explode('/', $url);
+            $index = count($params) - 1;
+            return  $params[$index];
+        }
         
         public function reArrayFiles($file)
             {

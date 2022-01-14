@@ -7,6 +7,8 @@ use ZipArchive;
 class LauncherController extends BaseController
     {
         private $_modpacks = "cliente/launcher/config-launcher/modpacks.json";
+        private $_launcher_package = "cliente/launcher/package.json";
+
         private $_config = "cliente/launcher/config-launcher/config.json";
         private $_modpacks_dir = "cliente/files/files/";
         private $_launcher_update_dir = "cliente/launcher/update-launcher/";
@@ -77,6 +79,19 @@ class LauncherController extends BaseController
                     }
             }         
             return "All new launcher are released.";
+        }
+
+        public function updateLauncherVersion(){
+            $cdir = scandir($this->_launcher_update_dir);
+            $old_files = array();
+            foreach ($cdir as $key => $value){
+               array_push($old_files, $value);
+            }
+            
+            $data = file_get_contents('php://input');
+            // $fp = fopen($this->_config, 'w');
+            // fwrite($fp, $data);
+            // fclose($fp);
         }
 
     }
