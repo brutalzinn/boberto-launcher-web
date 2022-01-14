@@ -67,7 +67,6 @@ class LauncherController extends BaseController
             
             $file_ary = $this->reArrayFiles($_FILES['file']);         
             foreach ($file_ary as $file) {
-                
                 $target_file =  $this->_launcher_update_dir . basename($file["name"]);
                 $file_type = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
                 if($file_type != "zip"){
@@ -76,11 +75,8 @@ class LauncherController extends BaseController
                 if (!move_uploaded_file($file["tmp_name"], $target_file)) {
                     return "cant move file" . $file['name'] . 'to launcher update folder';
                     }
-            }
-            
+            }         
             return "All new launcher are released.";
-       
-
         }
 
     }
