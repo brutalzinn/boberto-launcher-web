@@ -31,7 +31,14 @@
     $route->add('/redis/clear','Redis','clearRedis');
 
 
-    try{
+    try
+    {
+        $request_headers = getallheaders();
+        if(!isset($request_headers['API-KEY']) || isset($request_headers['API-KEY']) && $request_headers['API-KEY'] != getenv('API_TOKEN')) {
+            http_response_code(401);
+            echo json_encode(array('status' => false, 'data' => 'API-KEY DONT PROVIDED OR API-KEY IS WRONG.'), JSON_UNESCAPED_UNICODE);
+            exit;
+        }
         http_response_code(200);
         echo json_encode(array('status' => true, 'data' => $route->submit()), JSON_UNESCAPED_UNICODE);
         exit;

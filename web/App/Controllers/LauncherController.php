@@ -75,12 +75,17 @@ class LauncherController extends BaseController
             return "All new launcher are released.";
         }
 
-        public function updateLauncherVersion(){
-            $old_files = $this->fileList($this->_launcher_update_dir);
-            $content = file_get_contents('php://input');
+        public function updateLauncherVersion()
+        {
 
             $launcher_package = file_get_contents($this->_launcher_package_file);
             $backup_package = json_decode($launcher_package, true);
+            if($this->isRequest("GET")){
+                return $backup_package;
+            }
+            $old_files = $this->fileList($this->_launcher_update_dir);
+            $content = file_get_contents('php://input');
+          
             $decode = json_decode( $content, true );
             foreach ( $decode["packages"] as $key => $value){
                 
@@ -99,8 +104,8 @@ class LauncherController extends BaseController
                     }
                 }
             }
-           
-            if (file_put_contents($this->_launcher_package_file, json_encode($decode,JSON_UNESCAPED_SLASHES))){
+            if($this->writeJson($this->_launcher_package_file, $decode))
+            {
                 return "Launcher config updated.";
             }
         }
