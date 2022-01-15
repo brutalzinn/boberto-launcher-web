@@ -1,7 +1,21 @@
 <?php
     header('Content-Type: application/json');
     require_once 'vendor/autoload.php';
+    use App\Services\RedisService;
+
+
     include 'route.php';
+    Predis\Autoloader::register();
+    $client = new Predis\Client([
+        'scheme' => 'tcp',
+        'host'   => getenv("BOBERTO_HOST"),
+        'port'   => 6379,
+        'password' => getenv("REDIS_PASSWORD")
+    ]);
+    RedisService::Init($client);
+    
+
+
     $route = new Route();
     //url, controller, method of controller, accept url params
     $route->add('/','Api','index');
@@ -13,6 +27,8 @@
     $route->add('/launcher/version','Launcher','updateLauncherVersion');
     $route->add('/modpackcreator/modpacks/sync','ModPackManager','syncModPack');
     $route->add('/modpackcreator/modpacks/append','ModPackManager','appendModPack');
+    $route->add('/redis/del','Redis','delRedis');
+    $route->add('/redis/clear','Redis','clearRedis');
 
 
     try{
