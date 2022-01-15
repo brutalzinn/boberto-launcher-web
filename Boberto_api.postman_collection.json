@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "cabdacdf-e167-4834-8dd3-a39da65fc2ff",
-		"name": "Boberto",
+		"_postman_id": "b7c4279a-38a3-4c7e-8f45-dcbb19efbdfb",
+		"name": "Boberto-PHP",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -9,7 +9,7 @@
 			"name": "redis",
 			"item": [
 				{
-					"name": "launcher/redis/del",
+					"name": "redis/del",
 					"request": {
 						"auth": {
 							"type": "apikey",
@@ -38,21 +38,20 @@
 							}
 						},
 						"url": {
-							"raw": "{{prod}}/launcher/del/redis",
+							"raw": "{{dev}}/redis/del",
 							"host": [
-								"{{prod}}"
+								"{{dev}}"
 							],
 							"path": [
-								"launcher",
-								"del",
-								"redis"
+								"redis",
+								"del"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "launcher/redis/clear",
+					"name": "redis/clear",
 					"request": {
 						"auth": {
 							"type": "apikey",
@@ -81,14 +80,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{prod}}/launcher/clear/redis",
+							"raw": "{{dev}}/redis/clear",
 							"host": [
-								"{{prod}}"
+								"{{dev}}"
 							],
 							"path": [
-								"launcher",
-								"clear",
-								"redis"
+								"redis",
+								"clear"
 							]
 						}
 					},
@@ -99,6 +97,48 @@
 		{
 			"name": "launcher",
 			"item": [
+				{
+					"name": "config",
+					"item": [
+						{
+							"name": "launcher/config",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "api-key",
+										"value": "teste",
+										"type": "default",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"maintenance\": \"off\",\r\n  \"maintenance_message\": \"Le server est en maintenance.<br>Merci de bien vouloir essayer ultérieurement.\",\r\n  \"offline\": \"on\",\r\n  \"client_id\": \"\",\r\n  \"game_version\": \"1.12.2\",\r\n  \"custom\": true,\r\n  \"verify\": false,\r\n  \"java\": true,\r\n  \"dataDirectory\": \".bobertolandia\",\r\n  \"ignored\": [\"options.txt\",\"log\"]\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{dev}}/launcher/config",
+									"host": [
+										"{{dev}}"
+									],
+									"path": [
+										"launcher",
+										"config"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
 				{
 					"name": "launcher/modpacks/upload",
 					"request": {
@@ -159,19 +199,7 @@
 					"name": "launcher/version/upload",
 					"request": {
 						"auth": {
-							"type": "apikey",
-							"apikey": [
-								{
-									"key": "value",
-									"value": "teste",
-									"type": "string"
-								},
-								{
-									"key": "key",
-									"value": "api-key",
-									"type": "string"
-								}
-							]
+							"type": "noauth"
 						},
 						"method": "POST",
 						"header": [
@@ -228,28 +256,19 @@
 							"type": "apikey",
 							"apikey": [
 								{
-									"key": "value",
-									"value": "teste",
+									"key": "key",
+									"value": "API-KEY",
 									"type": "string"
 								},
 								{
-									"key": "key",
-									"value": "api-key",
+									"key": "value",
+									"value": "teste",
 									"type": "string"
 								}
 							]
 						},
-						"method": "POST",
+						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"version\": \"2.0.3\",\r\n  \"packages\": {\r\n    \"win64\": {\r\n      \"url\": \"https://launcher.webincloudy.fr/users/luuxis/launcher/launcher-download/Uzurion-Launcher-1.0.1-win.zip\"\r\n    },\r\n    \"mac64\": {\r\n      \"url\": \"https://launcher.webincloudy.fr/users/luuxis/launcher/launcher-download/Uzurion-Launcher-1.0.1-mac.zip\"\r\n    },\r\n    \"linux64\": {\r\n      \"url\": \"https://launcher.webincloudy.fr/users/luuxis/launcher/launcher-download/boberto-minecraft-launcher-linux.zip\"\r\n    }\r\n  }\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
 							"raw": "{{dev}}/launcher/version",
 							"host": [
@@ -270,13 +289,13 @@
 							"type": "apikey",
 							"apikey": [
 								{
-									"key": "value",
-									"value": "teste",
+									"key": "key",
+									"value": "API-KEY",
 									"type": "string"
 								},
 								{
-									"key": "key",
-									"value": "api-key",
+									"key": "value",
+									"value": "teste",
 									"type": "string"
 								}
 							]
@@ -333,14 +352,14 @@
 							"formdata": []
 						},
 						"url": {
-							"raw": "{{dev}}/launcher/list/modpacks",
+							"raw": "{{dev}}/launcher/modpacks/list",
 							"host": [
 								"{{dev}}"
 							],
 							"path": [
 								"launcher",
-								"list",
-								"modpacks"
+								"modpacks",
+								"list"
 							]
 						}
 					},
@@ -416,7 +435,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"author\": \"teste\",\r\n    \"datetime_creat_at\": \"2021-12-31T15:58:57.069Z\",\r\n    \"datetime_updat_at\": \"2021-12-31T16:10:41.092Z\",\r\n    \"default\": true,\r\n    \"description\": \"Modpack padrão\",\r\n    \"directory\": \"modpack-boberto\",\r\n    \"forge_version\": \"14.23.5.2860\",\r\n    \"game_version\": \"1.12.2\",\r\n    \"id\": \"8de04e4a-0e99-484a-a522-f84113041af0\",\r\n    \"img\": \"\",\r\n    \"name\": \"ModPack do abacate\",\r\n    \"premium\": false,\r\n    \"server_ip\": \"boberto.net\",\r\n    \"server_port\": \"25565\"\r\n}\r\n",
+							"raw": "{\r\n    \"author\": \"essfsggsgsg\",\r\n    \"datetime_creat_at\": \"2021-12-31T15:58:57.069Z\",\r\n    \"datetime_updat_at\": \"2021-12-31T16:10:41.092Z\",\r\n    \"default\": true,\r\n    \"description\": \"Modpack teste\",\r\n    \"directory\": \"modpack-boberto\",\r\n    \"forge_version\": \"14.23.5.2860\",\r\n    \"game_version\": \"1.12.2\",\r\n    \"id\": \"8de04e4a-0e99-484a-a522-f84113041af0\",\r\n    \"img\": \"\",\r\n    \"name\": \"ModPack do abacate\",\r\n    \"premium\": false,\r\n    \"server_ip\": \"boberto.net\",\r\n    \"server_port\": \"25565\"\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -432,6 +451,34 @@
 								"modpackcreator",
 								"modpacks",
 								"append"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "teste",
+			"item": [
+				{
+					"name": "http://127.0.0.1",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1/launcher/modpacks/list",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"path": [
+								"launcher",
+								"modpacks",
+								"list"
 							]
 						}
 					},
