@@ -6,7 +6,8 @@ use Exception;
 class NewsController extends BaseController
 {
 
-public function updateNews(){
+public function updateNews()
+{
 
     $news_file = $this->readJson($this->_news_file);
     if($this->isRequest("GET")){
@@ -49,7 +50,8 @@ public function updateNews(){
 
 }
 
-public function deleteNews(){
+public function deleteNews()
+{
 
     $news_file = $this->readJson($this->_news_file);
     $content = file_get_contents('php://input');
