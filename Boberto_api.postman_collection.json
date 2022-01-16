@@ -364,6 +364,136 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "launcher/get/news",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "key",
+									"value": "API-KEY",
+									"type": "string"
+								},
+								{
+									"key": "value",
+									"value": "teste",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n                \"title\": \"Titleee.\",\r\n                \"body\": \"bodyyyyyyyyy text.\",\r\n                \"img\": \"https://raw.githubusercontent.com/luuxis/Uzurion-Launcher/master/app/assets/images/background/wallpaper.jpg\",\r\n                \"author\": \"robertocpaes\",\r\n                \"date\": \"15/01/2022\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{dev}}/launcher/news",
+							"host": [
+								"{{dev}}"
+							],
+							"path": [
+								"launcher",
+								"news"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "launcher/add/news",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "key",
+									"value": "API-KEY",
+									"type": "string"
+								},
+								{
+									"key": "value",
+									"value": "teste",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":\"61e3728320b19\",\r\n    \"title\": \"Titleee 5000\",\r\n    \"body\": \"bodyyyyyyyyy text.\",\r\n    \"img\": \"https://raw.githubusercontent.com/luuxis/Uzurion-Launcher/master/app/assets/images/background/wallpaper.jpg\",\r\n    \"author\": \"robertocpaes\",\r\n    \"date\": \"15/01/2022\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{dev}}/launcher/news",
+							"host": [
+								"{{dev}}"
+							],
+							"path": [
+								"launcher",
+								"news"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "launcher/del/news",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "key",
+									"value": "API-KEY",
+									"type": "string"
+								},
+								{
+									"key": "value",
+									"value": "teste",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":\"61e374488701c\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{dev}}/launcher/news/del",
+							"host": [
+								"{{dev}}"
+							],
+							"path": [
+								"launcher",
+								"news",
+								"del"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -451,34 +581,6 @@
 								"modpackcreator",
 								"modpacks",
 								"append"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "teste",
-			"item": [
-				{
-					"name": "http://127.0.0.1",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"url": {
-							"raw": "http://127.0.0.1/launcher/modpacks/list",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"path": [
-								"launcher",
-								"modpacks",
-								"list"
 							]
 						}
 					},

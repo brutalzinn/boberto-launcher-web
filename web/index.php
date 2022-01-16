@@ -13,7 +13,8 @@
         'password' => getenv("REDIS_PASSWORD")
     ]);
     RedisService::Init($client);
-    
+    $api_key = getenv('API_HEADER');
+
 
 
     $route = new Route();
@@ -37,7 +38,7 @@
     try
     {
         $request_headers = getallheaders();
-        if(!isset($request_headers['API-KEY']) || isset($request_headers['API-KEY']) && $request_headers['API-KEY'] != getenv('API_TOKEN')) {
+        if(!isset($request_headers[$api_key]) || isset($request_headers[$api_key]) && $request_headers[$api_key] != getenv('API_TOKEN')) {
             http_response_code(401);
             echo json_encode(array('status' => false, 'data' => 'API-KEY DONT PROVIDED OR API-KEY IS WRONG.'), JSON_UNESCAPED_UNICODE);
             exit;
