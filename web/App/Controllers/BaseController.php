@@ -4,6 +4,7 @@
     class BaseController{
 
         public $_modpacks_file = "cliente/launcher/config-launcher/modpacks.json";
+        public $_news_file = "cliente/launcher/news-launcher/news-launcher.json";
         public $_launcher_package_file = "cliente/launcher/package.json";
         public $_launcher_config_file = "cliente/launcher/config-launcher/config.json";
         public $_modpacks_dir = "cliente/files/files/";
@@ -91,7 +92,6 @@
                         $result = true;
                     }
                 }
-                echo $result ? "existe" : "não existe";
                 return $result;
             }
 
