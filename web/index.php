@@ -25,7 +25,6 @@ include 'route.php';
         $controller = new ApiController();
         return $controller->index();
       },'get');
-    Route::add('/teste','Api','teste', true);
     Route::add('/launcher/modpacks/list','Launcher','list_modpacks');
     Route::add('/launcher/config','Launcher','launcher_Config');
     Route::add('/launcher/modpacks/upload','Launcher','uploadFile');
