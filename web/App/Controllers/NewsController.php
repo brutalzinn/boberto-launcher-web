@@ -6,22 +6,17 @@ use Exception;
 class NewsController extends BaseController
 {
 
-public function readNews(){
-    $news_file = $this->readJson($this->_news_file);
-    if(!$this->isRequest("GET")){
-        return "This routes only accepts get request.";
-    }
+public static function  readNews(){
+    $news_file = self::readJson(self::$_news_file);
+
   //  print_r($this->getUrlParams());
     return $news_file;
 }
 
-public function updateNews()
+public static function  updateNews()
 {
 
-    $news_file = $this->readJson($this->_news_file);
-    if(!$this->isRequest("POST")){
-        return "This routes only acccepts post.";
-    }
+    $news_file = self::readJson(self::$_news_file);
 
     $content = file_get_contents('php://input');
     $decode_content = json_decode( $content, true );
@@ -43,7 +38,7 @@ public function updateNews()
         {
             $modpack_old[$key] = $decode_content;     
         }
-        else if($decode_content['id'] != $value['id'] && !$this->checkObjectList('id', $modpack_old, $decode_content['id'])) 
+        else if($decode_content['id'] != $value['id'] && !self::checkObjectList('id', $modpack_old, $decode_content['id'])) 
         {
             array_push($modpack_old, $decode_content);
         }
@@ -54,15 +49,15 @@ public function updateNews()
     }
     $jsonObject = array('news' => $modpack_old);
     
-    $this->writeJson($this->_news_file, $jsonObject);
+    self::writeJson(self::$_news_file, $jsonObject);
     return "News Added";
 
 }
 
-public function deleteNews()
+public static function  deleteNews()
 {
 
-    $news_file = $this->readJson($this->_news_file);
+    $news_file = self::readJson(self::$_news_file);
     $content = file_get_contents('php://input');
     $decode_content = json_decode( $content, true );
   
@@ -87,7 +82,7 @@ public function deleteNews()
 
     $jsonObject = array('news' => $arr2);
     
-    $this->writeJson($this->_news_file, $jsonObject);
+    self::writeJson(self::$_news_file, $jsonObject);
     return "News deleted";
 
 }

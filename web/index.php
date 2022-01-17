@@ -5,6 +5,9 @@
     use App\Controllers;
 use App\Controllers\ApiController;
 use App\Controllers\LauncherController;
+use App\Controllers\ModPackManagerController;
+use App\Controllers\NewsController;
+use App\Controllers\RedisController;
 
 include 'route.php';
     Predis\Autoloader::register();
@@ -28,15 +31,15 @@ include 'route.php';
     Route::add('/launcher/config',fn()=> LauncherController::launcher_Config(),'post');
     Route::add('/launcher/modpacks/upload',fn()=> LauncherController::uploadFile(),'post');
     Route::add('/launcher/version/upload',fn()=> LauncherController::uploadLauncherZips(),'post');
-    Route::add('/launcher/version','Launcher',fn()=> LauncherController::updateLauncherVersion(),'post');
-    Route::add('/modpackcreator/modpacks/sync','ModPackManager','syncModPack');
-    Route::add('/modpackcreator/modpacks/append','ModPackManager','appendModPack');
-    Route::add('/redis/del','Redis','delRedis');
-    Route::add('/redis/clear','Redis','clearRedis');
+    Route::add('/launcher/version', fn()=> LauncherController::updateLauncherVersion(),'post');
+    Route::add('/modpackcreator/modpacks/sync', fn()=> ModPackManagerController::syncModPack(),'post');
+    Route::add('/modpackcreator/modpacks/append', fn()=> ModPackManagerController::appendModPack(),'post');
+    Route::add('/redis/del', fn()=> RedisController::delRedis(),'post');
+    Route::add('/redis/clear', fn()=> RedisController::clearRedis(),'post');
     #if the content has id, the news will be updated
-    Route::add('/launcher/news/update','News','updateNews');
-    Route::add('/launcher/news','News','readNews', true);
-    Route::add('/launcher/news/del','News','deleteNews');
+    Route::add('/launcher/news/update', fn()=> NewsController::updateNews(),'post');
+    Route::add('/launcher/news', fn()=> NewsController::readNews(),'get');
+    Route::add('/launcher/news/del', fn()=> NewsController::deleteNews(),'post');
 
 
     Route::pathNotFound(function($path) {

@@ -6,7 +6,7 @@ use App\Services\RedisService;
 class RedisController extends BaseController
     {
 
-        public function delRedis(){
+        public static function delRedis(){
             $content = file_get_contents('php://input');
             $decode = json_decode( $content, true );
             if(RedisService::$client->del($decode['id'])){
@@ -16,9 +16,9 @@ class RedisController extends BaseController
             }
         }
 
-        public function clearRedis(){
+        public static function clearRedis(){
 
-            $modpacks_file = $this->readJson($this->_modpacks_file);
+            $modpacks_file = self::readJson(self::$_modpacks_file);
             foreach ( $modpacks_file as $key => $value)
             {
               RedisService::$client->del($value['id']);
