@@ -10,6 +10,12 @@
         public $_modpacks_dir = "cliente/files/files/";
         public $_launcher_update_dir = "cliente/launcher/update-launcher/";
 
+        public function getUrlParams(){
+            $url = $_SERVER['REQUEST_URI'];
+            $url_components = parse_url($url);
+            parse_str($url_components['query'], $params);
+            return $params;
+        }
         public function isRequest($string)
         {
             return  strtolower($string) ==  strtolower($_SERVER['REQUEST_METHOD']);

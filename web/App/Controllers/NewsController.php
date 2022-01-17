@@ -6,12 +6,21 @@ use Exception;
 class NewsController extends BaseController
 {
 
+public function readNews(){
+    $news_file = $this->readJson($this->_news_file);
+    if(!$this->isRequest("GET")){
+        return "This routes only accepts get request.";
+    }
+  //  print_r($this->getUrlParams());
+    return $news_file;
+}
+
 public function updateNews()
 {
 
     $news_file = $this->readJson($this->_news_file);
-    if($this->isRequest("GET")){
-        return $news_file;
+    if(!$this->isRequest("POST")){
+        return "This routes only acccepts post.";
     }
 
     $content = file_get_contents('php://input');

@@ -31,7 +31,8 @@
     $route->add('/redis/del','Redis','delRedis');
     $route->add('/redis/clear','Redis','clearRedis');
     #if the content has id, the news will be updated
-    $route->add('/launcher/news','News','updateNews');
+    $route->add('/launcher/news/update','News','updateNews');
+    $route->add('/launcher/news','News','readNews', true);
     $route->add('/launcher/news/del','News','deleteNews');
 
 
