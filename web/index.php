@@ -19,12 +19,10 @@ include 'route.php';
     define('BASEPATH','/');
 
 
-    $route = new Route();
+    
     //url, controller, method of controller, accept url params
-    Route::add('/',function() {
-        $controller = new ApiController();
-        return $controller->index();
-      },'get');
+    Route::add('/',fn()=> ApiController::index(),'get');
+
     Route::add('/launcher/modpacks/list','Launcher','list_modpacks');
     Route::add('/launcher/config','Launcher','launcher_Config');
     Route::add('/launcher/modpacks/upload','Launcher','uploadFile');
