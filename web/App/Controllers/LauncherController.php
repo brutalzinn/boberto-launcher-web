@@ -74,7 +74,11 @@ class LauncherController extends BaseController
 
             $launcher_package = file_get_contents(self::$_launcher_package_file);
             $backup_package = json_decode($launcher_package, true);
-         
+
+            if(self::isRequest("GET")){
+                return $backup_package;
+            }
+
             $old_files = self::fileList(self::$_launcher_update_dir);
             $content = file_get_contents('php://input');
           
@@ -90,7 +94,7 @@ class LauncherController extends BaseController
                     if(!$teste){
                         $antigo = self::getFileByUrl($backup_package["packages"][$key]["url"]);
                         $file_old = self::$_launcher_update_dir . basename($antigo);
-                        if(file_exists($file_old)){
+                        if(file_exists($file_old) && !is_dir($file_old)){
                             unlink($file_old);
                         }
                     }

@@ -31,7 +31,7 @@ include 'route.php';
     Route::add('/launcher/config',fn()=> LauncherController::launcher_Config(),'post');
     Route::add('/launcher/modpacks/upload',fn()=> LauncherController::uploadFile(),'post');
     Route::add('/launcher/version/upload',fn()=> LauncherController::uploadLauncherZips(),'post');
-    Route::add('/launcher/version', fn()=> LauncherController::updateLauncherVersion(),'post');
+    Route::add('/launcher/version', fn()=> LauncherController::updateLauncherVersion(),['get','post']);
     Route::add('/modpackcreator/modpacks/sync', fn()=> ModPackManagerController::syncModPack(),'post');
     Route::add('/modpackcreator/modpacks/append', fn()=> ModPackManagerController::appendModPack(),'post');
     Route::add('/redis/del', fn()=> RedisController::delRedis(),'post');
