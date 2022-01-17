@@ -3,35 +3,35 @@
 
     class BaseController{
 
-        public $_modpacks_file = "cliente/launcher/config-launcher/modpacks.json";
-        public $_news_file = "cliente/launcher/news-launcher/news-launcher.json";
-        public $_launcher_package_file = "cliente/launcher/package.json";
-        public $_launcher_config_file = "cliente/launcher/config-launcher/config.json";
-        public $_modpacks_dir = "cliente/files/files/";
-        public $_launcher_update_dir = "cliente/launcher/update-launcher/";
+        public static  $_modpacks_file = "cliente/launcher/config-launcher/modpacks.json";
+        public static  $_news_file = "cliente/launcher/news-launcher/news-launcher.json";
+        public static  $_launcher_package_file = "cliente/launcher/package.json";
+        public static  $_launcher_config_file = "cliente/launcher/config-launcher/config.json";
+        public static  $_modpacks_dir = "cliente/files/files/";
+        public static  $_launcher_update_dir = "cliente/launcher/update-launcher/";
 
-        public function getUrlParams(){
+        public static function  getUrlParams(){
             $url = $_SERVER['REQUEST_URI'];
             $url_components = parse_url($url);
             parse_str($url_components['query'], $params);
             return $params;
         }
-        public function isRequest($string)
+        public static function  isRequest($string)
         {
             return  strtolower($string) ==  strtolower($_SERVER['REQUEST_METHOD']);
         }
-        public function getParams(){
+        public static function  getParams(){
             $params =  explode('/', $_SERVER['REQUEST_URI']);
             return  array_slice($params, 2); 
         }
 
-        public function getFileByUrl($url){
+        public static function  getFileByUrl($url){
             $params =  explode('/', $url);
             $index = count($params) - 1;
             return  $params[$index];
         }
         
-        public function reArrayFiles($file)
+        public static function  reArrayFiles($file)
             {
                 $file_ary = array();
                 $file_count = count($file['name']);
@@ -47,7 +47,7 @@
                 return $file_ary;
             }
 
-            public function dirList($path){
+            public static function  dirList($path){
                 $dirs = array();
                 $structure = glob(rtrim($path, "/").'/*');
                 if (is_array($structure)) {
@@ -61,7 +61,7 @@
                 return $dirs;
                 
             }
-            public function fileList($path,$filter = ['zip']){
+            public static function  fileList($path,$filter = ['zip']){
                 $cdir = scandir($path);
                 $files = array();
                 foreach ($cdir as $key => $value){
@@ -73,16 +73,16 @@
                 return $files;
             }
 
-            public function pathJoin($dir,$filename){
+            public static function  pathJoin($dir,$filename){
                return  $dir . basename($filename);
             }
 
 //thanks to https://stackoverflow.com/questions/11613840/remove-all-files-folders-and-their-subfolders-with-php
-           public function recursiveRemove($dir) {
+           public static function  recursiveRemove($dir) {
                 $structure = glob(rtrim($dir, "/").'/*');
                 if (is_array($structure)) {
                     foreach($structure as $file) {
-                        if (is_dir($file)) $this->recursiveRemove($file);
+                        if (is_dir($file)) self::recursiveRemove($file);
                         elseif (is_file($file)) unlink($file);
                     }
                 }
@@ -91,7 +91,7 @@
 ///Find a list by a obj reference. Util to check if a modpack already exists.
 ///obj,array,expected
 ///
-         public function checkObjectList($obj,$array,$expected){
+         public static function  checkObjectList($obj,$array,$expected){
                 $result = false;
                 foreach($array as $key => $value) {
                     if($array[$key][$obj] == $expected){
@@ -101,12 +101,12 @@
                 return $result;
             }
 
-            public function writeJson($path, $decode)
+            public static function  writeJson($path, $decode)
             {
              return file_put_contents($path, json_encode($decode,JSON_UNESCAPED_SLASHES + JSON_PRETTY_PRINT));
             }
 
-            public function readJson($path)
+            public static function  readJson($path)
             {
                 $data = file_get_contents($path);
                 $json = json_decode($data, true);

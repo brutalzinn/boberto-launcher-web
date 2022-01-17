@@ -4,6 +4,7 @@
     use App\Services\RedisService;
     use App\Controllers;
 use App\Controllers\ApiController;
+use App\Controllers\LauncherController;
 
 include 'route.php';
     Predis\Autoloader::register();
@@ -23,9 +24,9 @@ include 'route.php';
     //url, controller, method of controller, accept url params
     Route::add('/',fn()=> ApiController::index(),'get');
 
-    Route::add('/launcher/modpacks/list','Launcher','list_modpacks');
-    Route::add('/launcher/config','Launcher','launcher_Config');
-    Route::add('/launcher/modpacks/upload','Launcher','uploadFile');
+    Route::add('/launcher/modpacks/list',fn()=> LauncherController::list_modpacks(),'get');
+    Route::add('/launcher/config',fn()=> LauncherController::launcher_Config(),'post');
+    Route::add('/launcher/modpacks/upload',fn()=> LauncherController::uploadFile(),'post');
     Route::add('/launcher/version/upload','Launcher','uploadLauncherZips');
     Route::add('/launcher/version','Launcher','updateLauncherVersion');
     Route::add('/modpackcreator/modpacks/sync','ModPackManager','syncModPack');
