@@ -1,8 +1,6 @@
 <?php
 namespace App\Controllers;
 
-use Exception;
-
 class NewsController extends BaseController
 {
 
@@ -12,8 +10,8 @@ public static function  readNews(){
   //  print_r($this->getUrlParams());
     return $news_file;
 }
-
-public static function  updateNews()
+//wrong way to do this.
+public static function  AddOrUpdateNews()
 {
 
     $news_file = self::readJson(self::$_news_file);
@@ -21,7 +19,7 @@ public static function  updateNews()
     $content = file_get_contents('php://input');
     $decode_content = json_decode( $content, true );
     if(!isset($decode_content['id'])){
-        $decode_content['id'] = uniqid();
+        $decode_content['id'] = self::guidv4();
     }
 
     $modpack_old = array();

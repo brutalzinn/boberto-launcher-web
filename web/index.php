@@ -36,8 +36,8 @@ include 'route.php';
     Route::add('/modpackcreator/modpacks/append', fn()=> ModPackManagerController::appendModPack(),'post');
     Route::add('/redis/del', fn()=> RedisController::delRedis(),'post');
     Route::add('/redis/clear', fn()=> RedisController::clearRedis(),'post');
-    #if the content has id, the news will be updated
-    Route::add('/launcher/news/update', fn()=> NewsController::updateNews(),'post');
+    //wrong way to do this.
+    Route::add('/launcher/news/update', fn()=> NewsController::AddOrUpdateNews(),'post');
     Route::add('/launcher/news', fn()=> NewsController::readNews(),'get');
     Route::add('/launcher/news/del', fn()=> NewsController::deleteNews(),'post');
 
@@ -64,16 +64,16 @@ include 'route.php';
 
     try
     {
-        $request_headers = getallheaders();
-        if(!isset($request_headers[$api_key]) || isset($request_headers[$api_key]) && $request_headers[$api_key] != getenv('API_TOKEN')) {
-            http_response_code(401);
-            echo json_encode(array('status' => false, 'data' => 'API-KEY DONT PROVIDED OR API-KEY IS WRONG.'), JSON_UNESCAPED_UNICODE);
-            exit;
-        }
+        // $request_headers = getallheaders();
+        // if(!isset($request_headers[$api_key]) || isset($request_headers[$api_key]) && $request_headers[$api_key] != getenv('API_TOKEN')) {
+        //     http_response_code(401);
+        //     echo json_encode(array('status' => false, 'data' => 'API-KEY DONT PROVIDED OR API-KEY IS WRONG.'), JSON_UNESCAPED_UNICODE);
+        //     exit;
+        // }
         Route::run(BASEPATH);
         exit;
     } catch (Exception $e) {
-        http_response_code(404);
+        http_response_code(400);
         echo json_encode(array('status' => false, 'data' => $e->getMessage()), JSON_UNESCAPED_UNICODE);
         exit;
     }

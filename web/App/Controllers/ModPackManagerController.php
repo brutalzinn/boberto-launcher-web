@@ -33,7 +33,9 @@ class ModPackManagerController extends BaseController
             $modpacks_file = self::readJson(self::$_modpacks_file);
             $content = file_get_contents('php://input');
             $decode_content = json_decode( $content, true );
-
+            if(!isset($decode_content['id'])){
+                $decode_content['id'] = self::guidv4();
+            }
             $modpack_old = array();
 
             foreach ( $modpacks_file as $value)
