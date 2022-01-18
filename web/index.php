@@ -64,12 +64,12 @@ include 'route.php';
 
     try
     {
-        // $request_headers = getallheaders();
-        // if(!isset($request_headers[$api_key]) || isset($request_headers[$api_key]) && $request_headers[$api_key] != getenv('API_TOKEN')) {
-        //     http_response_code(401);
-        //     echo json_encode(array('status' => false, 'data' => 'API-KEY DONT PROVIDED OR API-KEY IS WRONG.'), JSON_UNESCAPED_UNICODE);
-        //     exit;
-        // }
+        $request_headers = getallheaders();
+        if(!isset($request_headers[$api_key]) || isset($request_headers[$api_key]) && $request_headers[$api_key] != getenv('API_TOKEN')) {
+            http_response_code(401);
+            echo json_encode(array('status' => false, 'data' => 'API-KEY DONT PROVIDED OR API-KEY IS WRONG.'), JSON_UNESCAPED_UNICODE);
+            exit;
+        }
         Route::run(BASEPATH);
         exit;
     } catch (Exception $e) {
