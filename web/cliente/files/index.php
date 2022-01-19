@@ -1,5 +1,5 @@
 <?php
-include __DIR__.'../../../vendor/autoload.php';
+include '../../vendor/autoload.php';
 
 Predis\Autoloader::register();
 $client = new Predis\Client([
@@ -22,7 +22,7 @@ function dirToArray($dir,$modpack) {
             $size = filesize($dir . "/" . $value);
             $path = str_replace("files/".$modpack."/", "", $dir . "/" . $value);
 
-            $url = "http://" . $_SERVER['HTTP_HOST'] ."/data/cliente/files/". $dir . "/" . $value;
+            $url = "http://" . $_SERVER['HTTP_HOST'] ."/cliente/files/". $dir . "/" . $value;
             if (strpos($path, "libraries") !== false) {
                $type = "LIBRARY";
             } else if (strpos($path, "mods") !== false) {
