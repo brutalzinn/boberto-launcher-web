@@ -9,7 +9,7 @@
         "description": "teste",
         "game_version": "1.12.2",
         "forge_version": "",
-        "fabric_version": null,
+        "fabric_version": "",
         "server_ip": "boberto.net",
         "server_port": "25565",
         "datetime_creat_at": "2022-01-07T17:20:47.439Z",
