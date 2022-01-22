@@ -38,7 +38,7 @@ include 'route.php';
     Route::add('/redis/clear', fn()=> RedisController::clearRedis(),'post');
     //wrong way to do this.
     Route::add('/launcher/news/update', fn()=> NewsController::AddOrUpdateNews(),'post');
-    Route::add('/launcher/news', fn()=> NewsController::readNews(),'get');
+    Route::add('/launcher/news/page/(.*)/limit/(.*)', fn($page, $limit)=> NewsController::readNews($page, $limit),'get');
     Route::add('/launcher/news/del', fn()=> NewsController::deleteNews(),'post');
 
 

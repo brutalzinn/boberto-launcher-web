@@ -103,7 +103,7 @@ class Route{
                   }
       
                   if($return_value = call_user_func_array($route['function'], $matches)) {
-                    echo json_encode(array('status' => false, 'data' => $return_value), JSON_UNESCAPED_UNICODE);
+                    echo json_encode(array('status' => true, 'data' => $return_value), JSON_UNESCAPED_UNICODE);
                   }
       
                   $route_match_found = true;

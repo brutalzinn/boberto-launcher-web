@@ -4,11 +4,13 @@ namespace App\Controllers;
 class NewsController extends BaseController
 {
 
-public static function  readNews(){
+public static function  readNews($page, $limit){
     $news_file = self::readJson(self::$_news_file);
-
-  //  print_r($this->getUrlParams());
-    return $news_file;
+    $file_olds = array();
+    foreach ($news_file as $key => $value){
+        array_push($file_olds,$value);
+    }
+    return $file_olds;
 }
 //wrong way to do this.
 public static function  AddOrUpdateNews()
