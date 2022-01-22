@@ -11,7 +11,11 @@ public static function  readNews(int $page, int $limit){
     $total_by_page = $page * $limit;
     $start = 0 + ($page - 1) * $limit;
     $total_pages = $count_news / $limit;
-    $total_current = $total_by_page / $start;
+    if($start != 0){
+        $total_current = $total_by_page / $start;
+    }else{
+        $total_current = $limit;
+    }
     array_push($file_olds,array('total'=>$count_news,'limit'=>$limit,'page'=>$page,'total_pages'=>round($total_pages),'news_current'=>intval($total_current)));
    
     for($i=$start; $i < $total_by_page; $i++){
