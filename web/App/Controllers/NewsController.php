@@ -4,13 +4,22 @@ namespace App\Controllers;
 class NewsController extends BaseController
 {
 
-public static function  readNews($page, $limit){
+public static function  readNews(int $page, int $limit){
     $news_file = self::readJson(self::$_news_file);
     $file_olds = array();
-    foreach ($news_file as $key => $value){
-        array_push($file_olds,$value);
+    $count_news = count($news_file['news']);
+    $total_by_page = $page * $limit;
+    $start = 0 + ($page - 1) * $limit;
+    $total_pages = $count_news / $limit;
+    $total_current = $total_by_page / $start;
+    array_push($file_olds,array('total'=>$count_news,'limit'=>$limit,'page'=>$page,'total_pages'=>round($total_pages),'news_current'=>intval($total_current)));
+   
+    for($i=$start; $i < $total_by_page; $i++){
+        if($news_file['news'][$i] != null)
+        array_push($file_olds,$news_file['news'][$i]);
     }
-    return $file_olds;
+
+     return $file_olds;
 }
 //wrong way to do this.
 public static function  AddOrUpdateNews()
