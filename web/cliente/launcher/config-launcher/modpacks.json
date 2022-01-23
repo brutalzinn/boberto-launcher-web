@@ -1,23 +1,5 @@
 [
     {
-        "id": "2fdb960b-beea-48ae-bb11-46cac0b5517b",
-        "name": "teste fabric 2",
-        "directory": "modpack-fabric-2",
-        "default": true,
-        "premium": false,
-        "verify_mods": false,
-        "description": "",
-        "game_version": "1.18.1",
-        "forge_version": "",
-        "fabric_version": "0.12.12-1.18.1",
-        "server_ip": "",
-        "server_port": "",
-        "datetime_creat_at": "2022-01-19T18:30:13.046Z",
-        "datetime_updat_at": "2022-01-19T22:21:22.492Z",
-        "img": "",
-        "author": ""
-    },
-    {
         "id": "09ceedce-6e54-42e4-a2b2-a726b885f2a6",
         "name": "testeeeeeee",
         "directory": "modpack-teste",
@@ -34,5 +16,23 @@
         "datetime_updat_at": "2022-01-21T18:56:01.124Z",
         "img": "",
         "author": ""
+    },
+    {
+        "id": "2fdb960b-beea-48ae-bb11-46cac0b5517b",
+        "name": "teste fabric 2",
+        "directory": "modpack-fabric-2",
+        "default": true,
+        "premium": false,
+        "verify_mods": false,
+        "description": "teste de descri\u00e7\u00e3o",
+        "game_version": "1.18.1",
+        "forge_version": "",
+        "fabric_version": "0.12.12-1.18.1",
+        "server_ip": "",
+        "server_port": "",
+        "datetime_creat_at": "2022-01-19T18:30:13.046Z",
+        "datetime_updat_at": "2022-01-22T16:08:35.003Z",
+        "img": "https://www.mc-mod.net/wp-content/uploads/2019/05/Fabric-API-mod-for-Minecraft-logo-750x450.jpg",
+        "author": "robertocpaes"
     }
 ]

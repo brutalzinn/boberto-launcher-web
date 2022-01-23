@@ -102,6 +102,7 @@
                         elseif (is_file($file)) unlink($file);
                     }
                 }
+                if(is_dir($dir))
                 rmdir($dir);
             }
 ///Find a list by a obj reference. Util to check if a modpack already exists.

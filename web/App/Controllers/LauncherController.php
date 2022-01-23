@@ -27,17 +27,19 @@ class LauncherController extends BaseController
         public static function uploadFile()
 
         {
-
         $target_file =  self::$_modpacks_dir . basename($_FILES["file"]["name"]);
-        $file_type = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+        $file_type = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
         if($file_type != "zip"){
             throw new Exception("ONLY ZIP FILE IS SUPPORTED.");
         }
+        $modpack_dir = self::$_modpacks_dir . basename($_POST["directory"]);
+        if(is_dir($modpack_dir)){
+            self::recursiveRemove($modpack_dir);
+        }
         if (move_uploaded_file($_FILES["file"]["tmp_name"], $target_file)) {
             $zip = new ZipArchive;
-  
             if ($zip->open($target_file) === TRUE) {
-                $zip->extractTo(self::$_modpacks_dir . basename($_POST["directory"]));
+                $zip->extractTo($modpack_dir);
                 $zip->close();
                 unlink($target_file);
             } else {
@@ -59,12 +61,14 @@ class LauncherController extends BaseController
             foreach ($file_ary as $file) {
                 $target_file =  self::$_launcher_update_dir . basename($file["name"]);
                 $file_type = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-                if($file_type != "zip"){
+                if($file_type != "zip")
+                {
                     throw new Exception("ONLY ZIP FILE IS SUPPORTED.");
                 }
-                if (!move_uploaded_file($file["tmp_name"], $target_file)) {
+                if (!move_uploaded_file($file["tmp_name"], $target_file)) 
+                {
                     return "cant move file" . $file['name'] . 'to launcher update folder';
-                    }
+                }
             }         
             return "All new launcher are released.";
         }
