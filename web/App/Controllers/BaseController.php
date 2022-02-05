@@ -95,15 +95,11 @@
 
 //thanks to https://stackoverflow.com/questions/11613840/remove-all-files-folders-and-their-subfolders-with-php
            public static function  recursiveRemove($dir) {
-                $structure = glob(rtrim($dir, "/").'/*');
-                if (is_array($structure)) {
-                    foreach($structure as $file) {
-                        if (is_dir($file)) self::recursiveRemove($file);
-                        elseif (is_file($file)) unlink($file);
-                    }
-                }
-                if(is_dir($dir))
-                rmdir($dir);
+            $files = array_diff(scandir($dir), array('.','..'));
+            foreach ($files as $file) {
+              (is_dir("$dir/$file")) ? self::recursiveRemove("$dir/$file") : unlink("$dir/$file");
+            }
+            return rmdir($dir);
             }
 ///Find a list by a obj reference. Util to check if a modpack already exists.
 ///obj,array,expected
