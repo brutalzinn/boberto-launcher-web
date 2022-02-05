@@ -1,13 +1,13 @@
 version: "3"
 services:
-  boberto-web:
+  launcher-api:
     build: .
     ports:
       - "5000:5000"
     restart: always
     env_file:
       - .env
-    container_name: boberto-web
+    container_name: launcher-api
     volumes:
       - ./web:/var/www/html
       - ./web/config/php.ini:/usr/local/etc/php/php.ini
