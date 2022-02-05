@@ -1,6 +1,6 @@
-version: "3"
+version: "3.8"
 services:
-  launcher-api:
+  launcher-compose:
     build: .
     ports:
       - "5000:5000"
