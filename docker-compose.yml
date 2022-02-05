@@ -3,7 +3,7 @@ services:
   boberto-web:
     build: .
     ports:
-      - "80:80"
+      - "5000:5000"
     restart: always
     env_file:
       - .env
