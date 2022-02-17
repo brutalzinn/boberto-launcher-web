@@ -24,7 +24,7 @@ jobs:
         KEY: ${{ secrets.SSHKEY }}
       with:
         source: "."
-        target: "/home/brutalzinn/discord/boberto-launcher-web"
+        target: "/home/brutalzinn/launcher"
 
     - name: Adicionado chave do Discord
       uses: appleboy/ssh-action@master
@@ -49,18 +49,18 @@ jobs:
         envs: BOBERTO_DATABASE, BOBERTO_USER, BOBERTO_PASSWORD, BOBERTO_PORT, BOBERTO_HOST, JWT_SECRET, API_PORT, DISCORD_URL, DISCORD, REDIS_PASSWORD, REDIS_PORT
         script: |
           sudo rm -f .env
-          echo "BOBERTO_HOST=$BOBERTO_HOST" >>/home/brutalzinn/discord/boberto-launcher-web/.env
-          echo "JWT_SECRET=$JWT_SECRET" >>/home/brutalzinn/discord/boberto-launcher-web/.env
-          echo "BOBERTO_DATABASE=$BOBERTO_DATABASE" >>/home/brutalzinn/discord/boberto-launcher-web/.env
-          echo "BOBERTO_USER=$BOBERTO_USER" >>/home/brutalzinn/discord/boberto-launcher-web/.env
-          echo "BOBERTO_PASSWORD=$BOBERTO_PASSWORD" >>/home/brutalzinn/discord/boberto-launcher-web/.env
-          echo "BOBERTO_PORT=$BOBERTO_PORT" >>/home/brutalzinn/discord/boberto-launcher-web/.env
-          echo "API_PORT=$API_PORT" >>/home/brutalzinn/discord/boberto-launcher-web/.env
-          echo "DISCORD_KEY=$DISCORD_KEY" >>/home/brutalzinn/discord/boberto-launcher-web/.env
-          echo "DISCORD_URL=$DISCORD_URL" >>/home/brutalzinn/discord/boberto-launcher-web/.env
-          echo "REDIS_PASSWORD=$REDIS_PASSWORD" >>/home/brutalzinn/discord/boberto-launcher-web/.env
-          echo "REDIS_PORT=$REDIS_PORT" >>/home/brutalzinn/discord/boberto-launcher-web/.env
-          echo "ENVIROMENT=PRODUCTION" >>/home/brutalzinn/discord/boberto-launcher-web/.env
+          echo "BOBERTO_HOST=$BOBERTO_HOST" >>/home/brutalzinn/launcher/.env
+          echo "JWT_SECRET=$JWT_SECRET" >>/home/brutalzinn/launcher/.env
+          echo "BOBERTO_DATABASE=$BOBERTO_DATABASE" >>/home/brutalzinn/launcher/.env
+          echo "BOBERTO_USER=$BOBERTO_USER" >>/home/brutalzinn/launcher/.env
+          echo "BOBERTO_PASSWORD=$BOBERTO_PASSWORD" >>/home/brutalzinn/launcher/.env
+          echo "BOBERTO_PORT=$BOBERTO_PORT" >>/home/brutalzinn/launcher/.env
+          echo "API_PORT=$API_PORT" >>/home/brutalzinn/launcher/.env
+          echo "DISCORD_KEY=$DISCORD_KEY" >>/home/brutalzinn/launcher/.env
+          echo "DISCORD_URL=$DISCORD_URL" >>/home/brutalzinn/launcher/.env
+          echo "REDIS_PASSWORD=$REDIS_PASSWORD" >>/home/brutalzinn/launcher/.env
+          echo "REDIS_PORT=$REDIS_PORT" >>/home/brutalzinn/launcher/.env
+          echo "ENVIROMENT=PRODUCTION" >>/home/brutalzinn/launcher/.env
 
 
 
