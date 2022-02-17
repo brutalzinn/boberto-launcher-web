@@ -116,5 +116,5 @@ jobs:
         envs: DISCORD_URL
         script: |
           DATA=$(date '+%d-%m-%Y %H:%M:%S') &&
-          CONTENT="O deploy do boberto foi um sucesso. $DATA" &&
+          CONTENT="O deploy da web api foi um sucesso. $DATA" &&
           curl -X POST -H 'Content-Type: application/json' -d '{"content":"'"$CONTENT"'"}' $DISCORD_URL
