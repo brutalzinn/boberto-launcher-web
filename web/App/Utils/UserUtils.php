@@ -10,7 +10,7 @@ class UserUtils
     {
  
     $conn = pg_connect(HOSTSTRING) or die("Deu erro de comunicação com o banco");
-    $result = pg_query($conn,"SELECT token FROM usuario_token WHERE discord_id='".$payload->discord_id."'");
+    $result = pg_query($conn,"SELECT token FROM usuario_token WHERE discord_id='".$payload->discord_id."' AND origin='mod_creator'");
     $row_token = pg_fetch_assoc($result);
     if($row_token > 0){
         $token = $row_token['token'];
