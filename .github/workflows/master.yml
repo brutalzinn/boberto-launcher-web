@@ -1,0 +1,120 @@
+name: Deploy de produção
+
+on:
+  push:
+    # Sequence of patterns matched against refs/heads
+    branches:    
+      # Push events on main branch
+      - master
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+  
+    - name: Copy repository contents via scp
+      uses: appleboy/scp-action@master
+      env:
+        HOST: ${{ secrets.HOST }}
+        USERNAME: ${{ secrets.USERNAME }}
+        PORT: ${{ secrets.PORT }}
+        KEY: ${{ secrets.SSHKEY }}
+      with:
+        source: "."
+        target: "/home/brutalzinn/discord/boberto-launcher-web"
+
+    - name: Adicionado chave do Discord
+      uses: appleboy/ssh-action@master
+      env:
+        BOBERTO_DATABASE: ${{ secrets.BOBERTO_DATABASE }}
+        BOBERTO_HOST: ${{ secrets.BOBERTO_HOST }}
+        BOBERTO_USER: ${{ secrets.BOBERTO_USER }}
+        BOBERTO_PASSWORD: ${{ secrets.BOBERTO_PASSWORD }}
+        BOBERTO_PORT: ${{ secrets.BOBERTO_PORT }}
+        API_PORT: ${{ secrets.API_PORT }}
+        REDIS_PASSWORD: ${{ secrets.REDIS_PASSWORD }}
+        REDIS_PORT: ${{ secrets.REDIS_PORT }}
+        JWT_SECRET: ${{ secrets.JWT_SECRET }}
+        DISCORD_KEY: ${{ secrets.DISCORD }}
+        DISCORD_URL: ${{ secrets.DISCORD_URL }}
+
+      with:
+        host: ${{ secrets.HOST }}
+        USERNAME: ${{ secrets.USERNAME }}
+        PORT: ${{ secrets.PORT }}
+        KEY: ${{ secrets.SSHKEY }}
+        envs: BOBERTO_DATABASE, BOBERTO_USER, BOBERTO_PASSWORD, BOBERTO_PORT, BOBERTO_HOST, JWT_SECRET, API_PORT, DISCORD_URL, DISCORD, REDIS_PASSWORD, REDIS_PORT
+        script: |
+          sudo rm -f .env
+          echo "BOBERTO_HOST=$BOBERTO_HOST" >>/home/brutalzinn/discord/boberto/.env
+          echo "JWT_SECRET=$JWT_SECRET" >>/home/brutalzinn/discord/boberto/.env
+          echo "BOBERTO_DATABASE=$BOBERTO_DATABASE" >>/home/brutalzinn/discord/boberto/.env
+          echo "BOBERTO_USER=$BOBERTO_USER" >>/home/brutalzinn/discord/boberto/.env
+          echo "BOBERTO_PASSWORD=$BOBERTO_PASSWORD" >>/home/brutalzinn/discord/boberto/.env
+          echo "BOBERTO_PORT=$BOBERTO_PORT" >>/home/brutalzinn/discord/boberto/.env
+          echo "API_PORT=$API_PORT" >>/home/brutalzinn/discord/boberto/.env
+          echo "DISCORD_KEY=$DISCORD_KEY" >>/home/brutalzinn/discord/boberto/.env
+          echo "DISCORD_URL=$DISCORD_URL" >>/home/brutalzinn/discord/boberto/.env
+          echo "REDIS_PASSWORD=$REDIS_PASSWORD" >>/home/brutalzinn/discord/boberto/.env
+          echo "REDIS_PORT=$REDIS_PORT" >>/home/brutalzinn/discord/boberto/.env
+          echo "ENVIROMENT=PRODUCTION" >>/home/brutalzinn/discord/boberto/.env
+
+
+
+    - name: Disparando notificação no Discord pré deploy
+      uses: appleboy/ssh-action@master
+      env:
+        DISCORD_URL: ${{ secrets.DISCORD_URL }}
+      with:
+        host: ${{ secrets.HOST }}
+        USERNAME: ${{ secrets.USERNAME }}
+        PORT: ${{ secrets.PORT }}
+        KEY: ${{ secrets.SSHKEY }}
+        envs: DISCORD_URL
+        script: |
+          DATA=$(date '+%d-%m-%Y %H:%M:%S') &&
+          CONTENT="Preparando para atualizar web api... - $DATA" &&
+          curl -X POST -H 'Content-Type: application/json' -d '{"content":"'"$CONTENT"'"}' $DISCORD_URL
+
+    - name: Executando versão nova
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        USERNAME: ${{ secrets.USERNAME }}
+        PORT: ${{ secrets.PORT }}
+        KEY: ${{ secrets.SSHKEY }}
+        script_stop: true
+        script: |
+          cd /home/brutalzinn/discord/boberto
+          bash start.sh
+
+
+    - name: Executando docker compose
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        USERNAME: ${{ secrets.USERNAME }}
+        PORT: ${{ secrets.PORT }}
+        KEY: ${{ secrets.SSHKEY }}
+        script_stop: true
+        script: |
+          cd /home/brutalzinn/discord/boberto
+          docker-compose up --force-recreate >> error.log 2>&1 &
+
+    - name: Disparando notificação no Discord
+      uses: appleboy/ssh-action@master
+      env:
+        DISCORD_URL: ${{ secrets.DISCORD_URL }}
+      with:
+        host: ${{ secrets.HOST }}
+        USERNAME: ${{ secrets.USERNAME }}
+        PORT: ${{ secrets.PORT }}
+        KEY: ${{ secrets.SSHKEY }}
+        envs: DISCORD_URL
+        script: |
+          DATA=$(date '+%d-%m-%Y %H:%M:%S') &&
+          CONTENT="O deploy do boberto foi um sucesso. $DATA" &&
+          curl -X POST -H 'Content-Type: application/json' -d '{"content":"'"$CONTENT"'"}' $DISCORD_URL
