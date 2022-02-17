@@ -6,24 +6,18 @@ use Exception;
 
 class UserUtils
 {
-    public static function CheckSession($payload){
-    try 
+    public static function CheckSession($payload)
     {
+ 
     $conn = pg_connect(HOSTSTRING) or die("Deu erro de comunicação com o banco");
     $result = pg_query($conn,"SELECT token FROM usuario_token WHERE discord_id='".$payload->discord_id."'");
     $row_token = pg_fetch_assoc($result);
     if($row_token > 0){
         $token = $row_token['token'];
-        if($payload->session_id != $token){
-            return true;
-        }
+        return $payload->session_id == $token;
     }
     return false;
     }
-    catch(Exception $e){
-    return false;
-    }
-
-}
+    
 
 }

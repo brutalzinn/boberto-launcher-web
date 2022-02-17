@@ -11,12 +11,12 @@ class JwtUtils
     try 
     {
     $decoded = JWT::decode($jwt, new Key(getenv('JWT_SECRET'), 'HS256'));
-    if(UserUtils::CheckSession($decoded))
-        {
-        return $decoded->payload;
-        }
+    if(UserUtils::CheckSession($decoded->payload)){       
+        return true;
     }
-    catch(Exception $e){
+    }
+    catch(Exception $e)
+    {
     return false;
     }
 
