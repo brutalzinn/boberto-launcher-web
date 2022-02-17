@@ -40,13 +40,14 @@ jobs:
         JWT_SECRET: ${{ secrets.JWT_SECRET }}
         DISCORD_KEY: ${{ secrets.DISCORD }}
         DISCORD_URL: ${{ secrets.DISCORD_URL }}
+        API_HEADER: ${{ secrets.API_HEADER }}
 
       with:
         host: ${{ secrets.HOST }}
         USERNAME: ${{ secrets.USERNAME }}
         PORT: ${{ secrets.PORT }}
         KEY: ${{ secrets.SSHKEY }}
-        envs: BOBERTO_DATABASE, BOBERTO_USER, BOBERTO_PASSWORD, BOBERTO_PORT, BOBERTO_HOST, JWT_SECRET, API_PORT, DISCORD_URL, DISCORD, REDIS_PASSWORD, REDIS_PORT
+        envs: BOBERTO_DATABASE, BOBERTO_USER, BOBERTO_PASSWORD, BOBERTO_PORT, BOBERTO_HOST, JWT_SECRET, API_PORT, DISCORD_URL, DISCORD, REDIS_PASSWORD, REDIS_PORT, API_HEADER
         script: |
           sudo rm -f .env
           echo "BOBERTO_HOST=$BOBERTO_HOST" >>/home/brutalzinn/launcher/.env
@@ -60,6 +61,7 @@ jobs:
           echo "DISCORD_URL=$DISCORD_URL" >>/home/brutalzinn/launcher/.env
           echo "REDIS_PASSWORD=$REDIS_PASSWORD" >>/home/brutalzinn/launcher/.env
           echo "REDIS_PORT=$REDIS_PORT" >>/home/brutalzinn/launcher/.env
+          echo "API_HEADER=$API_HEADER" >>/home/brutalzinn/launcher/.env         
           echo "ENVIROMENT=PRODUCTION" >>/home/brutalzinn/launcher/.env
 
 
