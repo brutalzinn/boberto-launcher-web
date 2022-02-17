@@ -7,22 +7,13 @@
     use App\Controllers\ModPackManagerController;
     use App\Controllers\NewsController;
     use App\Controllers\RedisController;
-
-include 'route.php';
-    Predis\Autoloader::register();
-    $client = new Predis\Client([
-        'scheme' => 'tcp',
-        'host'   => getenv("BOBERTO_HOST"),
-        'port'   => 6379,
-        'password' => getenv("REDIS_PASSWORD")
-    ]);
+    use App\Utils\JwtUtils;
+    include 'route.php';
     RedisService::Init($client);
     $api_key = getenv('API_HEADER');
 
     define('BASEPATH','/');
 
-
-    
     //url, controller, method of controller, accept url params
     Route::add('/',fn()=> ApiController::index(),'get');
 
@@ -42,20 +33,16 @@ include 'route.php';
 
 
     Route::pathNotFound(function($path) {
-        // Do not forget to send a status header back to the client
-        // The router will not send any headers by default
-        // So you will have the full flexibility to handle this case
+
         header('HTTP/1.0 404 Not Found');
        
         echo 'Error 404 :-(<br>';
         echo 'The requested path "'.$path.'" was not found!';
       });
       
-      // Add a 405 method not allowed route
+
       Route::methodNotAllowed(function($path, $method) {
-        // Do not forget to send a status header back to the client
-        // The router will not send any headers by default
-        // So you will have the full flexibility to handle this case
+
         header('HTTP/1.0 405 Method Not Allowed');
         echo 'Error 405 :-(<br>';
         echo 'The requested path "'.$path.'" exists. But the request method "'.$method.'" is not allowed on this path!';
@@ -63,8 +50,11 @@ include 'route.php';
 
     try
     {
+        //This need be changed early. Because a Bcrypt to handle a user like a security for api key..
+        //its useless.
+        
         $request_headers = getallheaders();
-        if(!isset($request_headers[$api_key]) || isset($request_headers[$api_key]) && $request_headers[$api_key] != getenv('API_TOKEN')) {
+        if(!isset($request_headers[$api_key]) || isset($request_headers[$api_key]) && !JwtUtils::CheckJwt($request_headers[$api_key])) {
             http_response_code(401);
             echo json_encode(array('status' => false, 'data' => 'API-KEY DONT PROVIDED OR API-KEY IS WRONG.'), JSON_UNESCAPED_UNICODE);
             exit;
