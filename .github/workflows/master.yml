@@ -64,8 +64,6 @@ jobs:
           echo "API_HEADER=$API_HEADER" >>/home/brutalzinn/launcher/.env         
           echo "ENVIROMENT=PRODUCTION" >>/home/brutalzinn/launcher/.env
 
-
-
     - name: Disparando notificação no Discord pré deploy
       uses: appleboy/ssh-action@master
       env:
@@ -81,19 +79,6 @@ jobs:
           CONTENT="Preparando para atualizar web api... - $DATA" &&
           curl -X POST -H 'Content-Type: application/json' -d '{"content":"'"$CONTENT"'"}' $DISCORD_URL
 
-    - name: Executando versão nova
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.HOST }}
-        USERNAME: ${{ secrets.USERNAME }}
-        PORT: ${{ secrets.PORT }}
-        KEY: ${{ secrets.SSHKEY }}
-        script_stop: true
-        script: |
-          cd /home/brutalzinn/discord/boberto
-          bash start.sh
-
-
     - name: Executando docker compose
       uses: appleboy/ssh-action@master
       with:
@@ -103,7 +88,7 @@ jobs:
         KEY: ${{ secrets.SSHKEY }}
         script_stop: true
         script: |
-          cd /home/brutalzinn/discord/boberto
+          cd /home/brutalzinn/launcher
           docker-compose up --force-recreate >> error.log 2>&1 &
 
     - name: Disparando notificação no Discord
