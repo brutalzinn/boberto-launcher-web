@@ -48,7 +48,7 @@ jobs:
         envs: BOBERTO_DATABASE, BOBERTO_USER, BOBERTO_PASSWORD, BOBERTO_PORT, BOBERTO_HOST, JWT_SECRET, API_PORT, DISCORD_URL, DISCORD, REDIS_PASSWORD, REDIS_PORT, API_HEADER
         script: |
           sudo rm -f .env
-          echo "BOBERTO_HOST=$BOBERTO_HOST" >>/home/brutalzinn/launcher/.env
+          echo "BOBERTO_HOST=$BOBERTO_HOST" >/home/brutalzinn/launcher/.env
           echo "JWT_SECRET=$JWT_SECRET" >>/home/brutalzinn/launcher/.env
           echo "BOBERTO_DATABASE=$BOBERTO_DATABASE" >>/home/brutalzinn/launcher/.env
           echo "BOBERTO_USER=$BOBERTO_USER" >>/home/brutalzinn/launcher/.env
