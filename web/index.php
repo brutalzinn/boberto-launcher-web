@@ -1,18 +1,19 @@
 <?php
     header('Content-Type: application/json');
     require_once 'vendor/autoload.php';
+
     use App\Services\RedisService;
     use App\Controllers\ApiController;
     use App\Controllers\LauncherController;
     use App\Controllers\ModPackManagerController;
     use App\Controllers\NewsController;
     use App\Controllers\RedisController;
-    use App\Utils\JwtUtils;
+
     include 'route.php';
     RedisService::Init($client);
-    $api_key = getenv('API_HEADER');
 
     define('BASEPATH','/');
+    define('API_KEY',getenv("API_HEADER"));
     define('HOST',getenv("BOBERTO_HOST"));
     define('DATABASE',getenv("BOBERTO_DATABASE"));
     define('USER',getenv("BOBERTO_USER"));
@@ -29,8 +30,12 @@
     Route::add('/launcher/modpacks/upload',fn()=> LauncherController::uploadFile(),'post');
     Route::add('/launcher/version/upload',fn()=> LauncherController::uploadLauncherZips(),'post');
     Route::add('/launcher/version', fn()=> LauncherController::updateLauncherVersion(),['get','post']);
+
+   
     Route::add('/modpackcreator/modpacks/sync', fn()=> ModPackManagerController::syncModPack(),'post');
     Route::add('/modpackcreator/modpacks/append', fn()=> ModPackManagerController::appendModPack(),'post');
+    Route::add('/modpackcreator/cliente/modpack/(.*)', fn($id)=> ModPackManagerController::getModPackFileInfo($id), ['get'], true, true);
+
     Route::add('/redis/del', fn()=> RedisController::delRedis(),'post');
     Route::add('/redis/clear', fn()=> RedisController::clearRedis(),'post');
     //wrong way to do this.
@@ -61,11 +66,11 @@
         //its useless.
         
         $request_headers = getallheaders();
-        if(!isset($request_headers[$api_key]) || isset($request_headers[$api_key]) && !JwtUtils::CheckJwt($request_headers[$api_key])) {
-            http_response_code(401);
-            echo json_encode(array('status' => false, 'data' => 'API-KEY DONT PROVIDED OR API-KEY IS WRONG.'), JSON_UNESCAPED_UNICODE);
-            exit;
-        }
+        // if(!isset($request_headers[$api_key]) || isset($request_headers[$api_key]) && !JwtUtils::CheckJwt($request_headers[$api_key])) {
+        //     http_response_code(401);
+        //     echo json_encode(array('status' => false, 'data' => 'API-KEY DONT PROVIDED OR API-KEY IS WRONG.'), JSON_UNESCAPED_UNICODE);
+        //     exit;
+        // }
         Route::run(BASEPATH);
         exit;
     } catch (Exception $e) {

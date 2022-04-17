@@ -3,7 +3,6 @@ namespace App\Controllers;
 
 use Exception;
 use ZipArchive;
-
 class LauncherController extends BaseController
     {
 
@@ -109,5 +108,6 @@ class LauncherController extends BaseController
                 return "Launcher config updated.";
             }
         }
+
 
     }

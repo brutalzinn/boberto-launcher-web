@@ -3,6 +3,9 @@
 
 //this refactor is more usefull than my own route class implementation
 //thanks to https://github.com/steampixel/simplePHPRoute
+
+use App\Utils\JwtUtils;
+
 class Route{
 
 
@@ -17,11 +20,13 @@ class Route{
           * @param string|array $method  Either a string of allowed method or an array with string values
           *
           */
-        public static function add($expression, $function, $method = 'get'){
+        public static function add($expression, $function, $method = 'get', $ignore_response = false, $ignore_auth = false){
           array_push(self::$routes, Array(
             'expression' => $expression,
             'function' => $function,
-            'method' => $method
+            'method' => $method,
+            'ignore_response' => $ignore_response,
+            'ignore_auth' => $ignore_auth
           ));
         }
       
@@ -101,12 +106,29 @@ class Route{
                   if ($basepath != '' && $basepath != '/') {
                     array_shift($matches); // Remove basepath
                   }
-      
-                  if($return_value = call_user_func_array($route['function'], $matches)) {
-                    echo json_encode(array('status' => true, 'data' => $return_value), JSON_UNESCAPED_UNICODE);
-                  }
-      
+  //THIS IS VERYYYYYYY BAD. BUT TODAY ITS SUNDAY AND I NEED TO PLAY MINECRAFT WITH MY SISTER.
+  //#NEEDBEFIXEDSOMELATER
                   $route_match_found = true;
+                  if($route['ignore_auth'] == false)
+                  {
+                    if(!isset($request_headers[API_KEY]) || isset($request_headers[API_KEY]) && !JwtUtils::CheckJwt($request_headers[API_KEY])) {
+                          http_response_code(401);
+                          echo json_encode(array('status' => false, 'data' => 'API-KEY DONT PROVIDED OR API-KEY IS WRONG.'), JSON_UNESCAPED_UNICODE);
+                          exit;
+                      }
+                  }
+                  if($return_value = call_user_func_array($route['function'], $matches)) {
+                    $response = array('status' => true, 'data' => $return_value);
+                    if($route['ignore_response'])
+                    {
+                      $response = $return_value;
+                      echo $response;
+                      return;
+                    }
+                      echo json_encode($response, JSON_UNESCAPED_UNICODE);
+                  }
+                  
+                  
       
                   // Do not check other routes
                   break;

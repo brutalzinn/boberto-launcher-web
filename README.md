@@ -2,13 +2,13 @@
 
 # PORTUGUÊS
 
-Este repositório contém uma web para o lançador de minecraft boberto
-e uma api python com frasco para ser usado com meu [criador de modpack](https://github.com/brutalzinn/CriadorDeMods)
+Este repositório contém uma web  api em PHP para o lançador de minecraft boberto
+criador de modpack](https://github.com/brutalzinn/CriadorDeMods)
 
 você precisa renomear env.example para .env e configurar com sua senha.
 
 Você precisa usar o Redis para armazenar em cache todos
-modpacks json gerados por php. Eu uso o redis para armazenar em cache todos os diretórios json gerados pelos modpacks para me dar uma melhor latência para o downloader do modpack.
+modpacks json gerados por php. Eu uso o redis para armazenar em cache todos os diretórios json gerados pelos modpacks para me dar uma melhor latência para o launcher.
 
 # ENGLISH 
 

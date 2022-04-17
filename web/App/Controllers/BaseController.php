@@ -1,15 +1,9 @@
 <?php
-    namespace App\Controllers;
+namespace App\Controllers;
 
-    class BaseController{
+use App\Utils\PathUtils;
 
-        public static  $_modpacks_file = "cliente/launcher/config-launcher/modpacks.json";
-        public static  $_news_file = "cliente/launcher/news-launcher/news-launcher.json";
-        public static  $_launcher_package_file = "cliente/launcher/package.json";
-        public static  $_launcher_config_file = "cliente/launcher/config-launcher/config.json";
-        public static  $_modpacks_dir = "cliente/files/files/";
-        public static  $_launcher_update_dir = "cliente/launcher/update-launcher/";
-
+class BaseController extends PathUtils{
 
        public static function guidv4($data = null) {
             // Generate 16 bytes (128 bits) of random data or use the data passed into the function.
@@ -125,4 +119,6 @@
                 $json = json_decode($data, true);
                 return  $json;
             }
+
+
     }

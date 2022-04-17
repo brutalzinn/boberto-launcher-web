@@ -2,7 +2,8 @@
 namespace App\Controllers;
 
 use Exception;
-
+use App\Services\RedisService;
+use App\Services\FileInfoService;
 class ModPackManagerController extends BaseController
     {
 
@@ -58,6 +59,25 @@ class ModPackManagerController extends BaseController
             }
 
             self::writeJson(self::$_modpacks_file, $modpack_old);
-            return "Modpack Added";
+            $id = $decode_content['id'];
+            $modpack_file = FileInfoService::GetFileInfo($id);
+            $resultado = json_encode($modpack_file,JSON_UNESCAPED_SLASHES );
+            RedisService::$client->set($id, $resultado);
+            return "Modpack Added. Clear cache for {$id}";
+        }
+
+        public static function getModPackFileInfo($id)
+        {
+            $value = RedisService::$client->get($id);
+            if(!isset($value)){
+                $modpack_file = FileInfoService::GetFileInfo($id);
+                $resultado = json_encode($modpack_file, JSON_UNESCAPED_SLASHES);
+                RedisService::$client->set($id, $resultado);
+                RedisService::$client->expire($id, 3600);
+                return RedisService::$client->get($id);
+             }else{
+                return RedisService::$client->get($id);
+             }      
+
         }
     }
