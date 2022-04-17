@@ -18,7 +18,7 @@ private static function dirToArray($dir,$modpack)
 
                 $hash = hash_file('sha1', $dir . "/" . $value);
                 $size = filesize($dir . "/" . $value);
-                $path = str_replace('/cliente/files' . DIRECTORY_SEPARATOR, "", DIRECTORY_SEPARATOR . $dir . DIRECTORY_SEPARATOR . $value); //($dir . DIRECTORY_SEPARATOR . $value);
+                $path = str_replace('/cliente/files/'. $modpack . DIRECTORY_SEPARATOR, "", DIRECTORY_SEPARATOR . $dir . DIRECTORY_SEPARATOR . $value); //($dir . DIRECTORY_SEPARATOR . $value);
           
                 $url = "http://" . $_SERVER['HTTP_HOST'] . DIRECTORY_SEPARATOR. $dir . DIRECTORY_SEPARATOR . $value;
                 if (strpos($path, "libraries") !== false) {
