@@ -1,5 +1,7 @@
 # boberto-minecraft-launcher-web
 
+
+# Erro crítico de segurança detectado nessa api. Use o Docker ou qualquer outro orquestrador caso necessite fazer deploy em produção.
 # PORTUGUÊS
 
 Este repositório contém uma web  api em PHP para o lançador de minecraft boberto
