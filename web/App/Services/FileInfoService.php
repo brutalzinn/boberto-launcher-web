@@ -18,9 +18,9 @@ private static function dirToArray($dir,$modpack)
 
                 $hash = hash_file('sha1', $dir . "/" . $value);
                 $size = filesize($dir . "/" . $value);
-                $path = str_replace("files/".$modpack."/", "", $dir . "/" . $value);
-
-                $url = "http://" . $_SERVER['HTTP_HOST'] ."/". $dir . "/" . $value;
+                $path = $dir . DIRECTORY_SEPARATOR . $value;
+          
+                $url = "http://" . $_SERVER['HTTP_HOST'] . DIRECTORY_SEPARATOR. $dir . DIRECTORY_SEPARATOR . $value;
                 if (strpos($path, "libraries") !== false) {
                 $type = "LIBRARY";
                 } else if (strpos($path, "mods") !== false) {
@@ -51,11 +51,10 @@ public static function getDirectory($identificador){
 public static function GetFileInfo($id){
     $modpack = self::getDirectory($id);
     $dir = self::$_modpacks_dir . $modpack;
-    
-    if(!is_dir($dir)){
+    if(!is_dir($dir) || $modpack == null){
        return [];
     }
-    
+
     self::dirToArray($dir, $modpack);
     return self::$DIRS;
 }
