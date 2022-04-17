@@ -29,7 +29,7 @@
     Route::add('/launcher/config',fn()=> LauncherController::launcher_Config(),'post');
     Route::add('/launcher/modpacks/upload',fn()=> LauncherController::uploadFile(),'post');
     Route::add('/launcher/version/upload',fn()=> LauncherController::uploadLauncherZips(),'post');
-    Route::add('/launcher/version', fn()=> LauncherController::updateLauncherVersion(),['get','post']);
+    Route::add('/launcher/version', fn()=> LauncherController::updateLauncherVersion(),['get','post'], false, true);
 
    
     Route::add('/modpackcreator/modpacks/sync', fn()=> ModPackManagerController::syncModPack(),'post');

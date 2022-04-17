@@ -68,16 +68,17 @@ class ModPackManagerController extends BaseController
 
         public static function getModPackFileInfo($id)
         {
-            $value = RedisService::$client->get($id);
-            if(!isset($value)){
-                $modpack_file = FileInfoService::GetFileInfo($id);
-                $resultado = json_encode($modpack_file, JSON_UNESCAPED_SLASHES);
-                RedisService::$client->set($id, $resultado);
-                // RedisService::$client->expire($id, 3600);
+            $keyExist = RedisService::$client->exists($id);
+            if($keyExist){
                 return RedisService::$client->get($id);
-             }else{
-                return RedisService::$client->get($id);
-             }      
+             }
+
+            $modpack_file = FileInfoService::GetFileInfo($id);
+            $resultado = json_encode($modpack_file, JSON_UNESCAPED_SLASHES);
+            RedisService::$client->set($id, $resultado);
+            // RedisService::$client->expire($id, 3600);
+            return RedisService::$client->get($id);
+                  
 
         }
     }
