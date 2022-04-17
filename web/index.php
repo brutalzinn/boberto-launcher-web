@@ -64,13 +64,6 @@
     {
         //This need be changed early. Because a Bcrypt to handle a user like a security for api key..
         //its useless.
-        
-        $request_headers = getallheaders();
-        // if(!isset($request_headers[$api_key]) || isset($request_headers[$api_key]) && !JwtUtils::CheckJwt($request_headers[$api_key])) {
-        //     http_response_code(401);
-        //     echo json_encode(array('status' => false, 'data' => 'API-KEY DONT PROVIDED OR API-KEY IS WRONG.'), JSON_UNESCAPED_UNICODE);
-        //     exit;
-        // }
         Route::run(BASEPATH);
         exit;
     } catch (Exception $e) {

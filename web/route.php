@@ -111,6 +111,7 @@ class Route{
                   $route_match_found = true;
                   if($route['ignore_auth'] == false)
                   {
+                    $request_headers = getallheaders();
                     if(!isset($request_headers[API_KEY]) || isset($request_headers[API_KEY]) && !JwtUtils::CheckJwt($request_headers[API_KEY])) {
                           http_response_code(401);
                           echo json_encode(array('status' => false, 'data' => 'API-KEY DONT PROVIDED OR API-KEY IS WRONG.'), JSON_UNESCAPED_UNICODE);
